@@ -10,11 +10,11 @@ public class Collision extends ComponentWithId {
     public ObstacleType type;
     public Rectangle rectangle;
 
-    public Collision(int width, int height, int rad, ObstacleType type) {
+    public Collision(int width, int height, ObstacleType type) {
         super(CmpId.COLLISION.ordinal());
         this.width = width;
         this.height = height;
-        radius = rad;
+//        radius = rad;
         this.type = type;
         rectangle = new Rectangle();
         rectangle.height = height;

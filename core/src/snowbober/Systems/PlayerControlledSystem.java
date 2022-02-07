@@ -1,24 +1,26 @@
 package snowbober.Systems;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import snowbober.Components.*;
 import snowbober.ECS.Component;
-import snowbober.ECS.World;
 import snowbober.ECS.System;
+import snowbober.ECS.World;
+import snowbober.Util.ConstVals;
 
 import java.util.ArrayList;
-import java.util.Queue;
 
 public class PlayerControlledSystem implements System {
-    Queue<InputActions> actionsQueue;
+//    Queue<InputActions> actionsQueue;
 
-    public PlayerControlledSystem(Queue<InputActions> queue) {
-        actionsQueue = queue;
+    public PlayerControlledSystem() {
+//        actionsQueue = queue;
     }
 
     @Override
-    public void update(long gameFrame, World world) {
-        InputActions action = actionsQueue.poll();
+    public void update(long gameFrame, float delta, World world) {
+//        InputActions action = actionsQueue.poll();
 
         ArrayList<Component[]> components = world.getEntitiesWithComponents(new int[]{
                 CmpId.POSITION.ordinal(),
@@ -35,15 +37,25 @@ public class PlayerControlledSystem implements System {
             Jump jump = ((Jump) components.get(2)[entity]);
             Visual vis = (Visual) components.get(3)[entity];
 
-            if (action == InputActions.JUMP && pctrl.playerState != PlayerState.JUMPING) {
-                pctrl.playerState = PlayerState.JUMPING;
-                jump.startJumpFrame = gameFrame;
-                jump.jumpFrom = pos.y;
-                vis.texture = new Texture("bober-jump.png");
+            if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+                if (pctrl.playerState == PlayerState.SLIDING) {
+                    java.lang.System.out.println("SKOK Z RAILA!");
+                    pctrl.playerState = PlayerState.JUMPING_ON_RAIL;
+                    jump.jumpFrom = ConstVals.JUMP_FROM_RAIL_Y;
+                    jump.startJumpFrame = gameFrame;
+                    Texture texture = new Texture("bober-jump.png");
+                    components.get(3)[entity] = new Visual(texture, ConstVals.BOBER_IN_JUMP_WIDTH, ConstVals.BOBER_IN_JUMP_HEIGHT);
+                } else if (pctrl.playerState != PlayerState.JUMPING && pctrl.playerState != PlayerState.JUMPING_ON_RAIL) {
+                    java.lang.System.out.println("SKOK ZWYKlY");
+                    pctrl.playerState = PlayerState.JUMPING;
+                    jump.jumpFrom = ConstVals.JUMP_FROM_GROUND_Y;
+                    jump.startJumpFrame = gameFrame;
+                    Texture texture = new Texture("bober-jump.png");
+                    components.get(3)[entity] = new Visual(texture, ConstVals.BOBER_IN_JUMP_WIDTH, ConstVals.BOBER_IN_JUMP_HEIGHT);
+                }
             }
 
         }
 
     }
-
 }

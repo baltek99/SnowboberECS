@@ -63,8 +63,12 @@ public class GameScreen implements Screen {
                     world.addComponentToEntity(15, new Position(0, 0));
                 }
                 gameOverInit = false;
-            } else
-                world.update(frame++);
+            } else if (!gameOver && !gameOverInit) {
+                gameOverInit = true;
+
+            } else {
+                world.update(frame++, delta);
+            }
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

@@ -40,9 +40,9 @@ public class World {
         systems.clear();
     }
 
-    public void update(long gameFrame) throws InterruptedException {
+    public void update(long gameFrame, float delta) throws InterruptedException {
         for (System s : systems) {
-            s.update(gameFrame, this);
+            s.update(gameFrame, delta, this);
         }
     }
 

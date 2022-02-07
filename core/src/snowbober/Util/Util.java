@@ -32,7 +32,7 @@ public class Util {
     }
 
     public static float easeOut(float x) {
-        return 1 - (float) Math.pow(1 - x, 3);
+        return 1 - (float) Math.pow(1 - x, 2.8);
     }
 
     public static float flip(float x) {

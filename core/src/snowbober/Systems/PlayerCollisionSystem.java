@@ -5,13 +5,14 @@ import snowbober.Components.*;
 import snowbober.ECS.Component;
 import snowbober.ECS.World;
 import snowbober.ECS.System;
+import snowbober.Util.ConstVals;
 
 import java.util.ArrayList;
 
 public class PlayerCollisionSystem implements System {
 
     @Override
-    public void update(long gameFrame, World world) {
+    public void update(long gameFrame, float delta, World world) {
         ArrayList<Component[]> components = world.getEntitiesWithComponents(new int[]{
                 CmpId.PLAYER_CONTROLLED.ordinal(),
                 CmpId.COLLISION_RESPONSE.ordinal(),
@@ -30,9 +31,11 @@ public class PlayerCollisionSystem implements System {
             if (cr.obstacle == ObstacleType.BOX || (cr.obstacle == ObstacleType.RAIL && pc.playerState == PlayerState.IDLE)) {
                 world.killEntity(entity);
             } else if (cr.obstacle == ObstacleType.RAIL && pc.playerState == PlayerState.JUMPING) {
-                pos.y = 370;
+                pos.y = ConstVals.SLIDING_ON_RAIL_Y;
                 pc.playerState = PlayerState.SLIDING;
-                vis.texture = new Texture("bober-rail.png");
+                Texture texture = new Texture("bober-rail.png");
+                components.get(3)[entity] = new Visual(texture, ConstVals.BOBER_ON_RAIL_WIDTH, ConstVals.BOBER_ON_RAIL_HEIGHT);
+                world.removeComponentFromEntity(entity, cr);
             }
         }
     }

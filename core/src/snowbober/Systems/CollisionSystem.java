@@ -21,7 +21,7 @@ public class CollisionSystem implements System {
     }
 
     @Override
-    public void update(long gameFrame, World world) {
+    public void update(long gameFrame, float delta, World world) {
 
         ArrayList<Component[]> components = world.getEntitiesWithComponents(new int[]{
                 CmpId.POSITION.ordinal(),
@@ -69,15 +69,6 @@ public class CollisionSystem implements System {
 //            java.lang.System.out.println("KOLIZYJAAAAAAAAAAAAAAAAAAAAAA");
             return CollisionType.INTERSECT;
         }
-
-//        int distance = (int) Math.sqrt(((posA.x - posB.x) * (posA.x - posB.x)) + ((posA.y - posB.y) * (posA.y - posB.y)));
-//        java.lang.System.out.println("Dist: " + distance + " Pos: " + posA.x  + " " + posB.x);
-//        if (distance == colA.radius + colB.radius) {
-//            return CollisionType.TOUCH;
-//        } else if (distance < colA.radius + colB.radius) {
-//
-//            return CollisionType.INTERSECT;
-//        }
 
         return CollisionType.NONE;
     }

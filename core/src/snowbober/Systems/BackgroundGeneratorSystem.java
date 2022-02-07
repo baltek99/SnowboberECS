@@ -17,7 +17,7 @@ public class BackgroundGeneratorSystem implements System {
     }
 
     @Override
-    public void update(long gameFrame, World world) {
+    public void update(long gameFrame, float delta, World world) {
 
         ArrayList<Component[]> components = world.getEntitiesWithComponents(new int[]{
                 CmpId.POSITION.ordinal(),

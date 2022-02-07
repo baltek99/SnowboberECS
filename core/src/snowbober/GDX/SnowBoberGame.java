@@ -7,7 +7,7 @@ import snowbober.Components.*;
 import snowbober.ECS.World;
 import snowbober.GDX.Screens.GameScreen;
 import snowbober.Systems.*;
-import snowbober.Util.Util;
+import snowbober.Util.ConstVals;
 
 public class SnowBoberGame extends Game {
 
@@ -27,14 +27,18 @@ public class SnowBoberGame extends Game {
         setScreen(gameScreen);
     }
 
-    void createWorld() {
+    public void createWorld() {
 
         world.addSystem(new MoveSystem());
         world.addSystem(new BackgroundGeneratorSystem(V_WIDTH, V_HEIGHT));
         world.addSystem(new ObstacleGeneratorSystem(5, 10, V_WIDTH, V_HEIGHT));
-        world.addSystem(new JumpSystem());
+        world.addSystem(new PlayerControlledSystem());
         world.addSystem(new CollisionSystem(batch));
         world.addSystem(new PlayerCollisionSystem());
+        world.addSystem(new JumpOnRailSystem());
+        world.addSystem(new JumpSystem());
+        world.addSystem(new RailSystem());
+        world.addSystem(new SpeedSystem());
         world.addSystem(new RenderSystem(batch));
         world.addSystem(new GameOverSystem(gameScreen));
 
@@ -42,21 +46,21 @@ public class SnowBoberGame extends Game {
         Texture backgroundTexture = new Texture("background.jpg");
         world.addComponentToEntity(background1, new Position(0, 0));
         world.addComponentToEntity(background1, new Visual(backgroundTexture, V_WIDTH, V_HEIGHT));
-        world.addComponentToEntity(background1, new Move(-1));
+        world.addComponentToEntity(background1, new Move(-2));
 
         int background2 = 1;
         Texture background2Texture = new Texture("background.jpg");
         world.addComponentToEntity(background2, new Position(V_WIDTH, 0));
         world.addComponentToEntity(background2, new Visual(background2Texture, V_WIDTH, V_HEIGHT));
-        world.addComponentToEntity(background2, new Move(-1));
+        world.addComponentToEntity(background2, new Move(-2));
 
-        int player = 3;
+        int player = 11;
         Texture playerTexture = new Texture("bober-stand.png");
-        world.addComponentToEntity(player, new Position(100, 70));
+        world.addComponentToEntity(player, new Position(ConstVals.BOBER_DEFAULT_POSITION_X, ConstVals.BOBER_DEFAULT_POSITION_Y));
         world.addComponentToEntity(player, new Jump());
         world.addComponentToEntity(player, new PlayerControlled(PlayerState.IDLE));
-        world.addComponentToEntity(player, new Collision(180, 215, 100, ObstacleType.PLAYER));
-        world.addComponentToEntity(player, new Visual(playerTexture, 180, 215));
+        world.addComponentToEntity(player, new Collision(ConstVals.BOBER_DEFAULT_WIDTH, ConstVals.BOBER_DEFAULT_HEIGHT, ObstacleType.PLAYER));
+        world.addComponentToEntity(player, new Visual(playerTexture, ConstVals.BOBER_DEFAULT_WIDTH, ConstVals.BOBER_DEFAULT_HEIGHT));
     }
 
     @Override

@@ -19,7 +19,7 @@ public class RenderSystem implements System {
     }
 
     @Override
-    public void update(long gameFrame, World world) throws InterruptedException {
+    public void update(long gameFrame, float delta, World world) throws InterruptedException {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -34,6 +34,7 @@ public class RenderSystem implements System {
             if (pos == null || vis == null) continue;
 
             batch.begin();
+//            java.lang.System.out.println("delta " + delta);
             batch.draw(vis.texture, pos.x, pos.y, vis.imgWidth, vis.imgHeight);
             batch.end();
         }

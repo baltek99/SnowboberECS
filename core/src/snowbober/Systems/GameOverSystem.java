@@ -1,5 +1,7 @@
 package snowbober.Systems;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import snowbober.ECS.System;
 import snowbober.Components.CmpId;
 import snowbober.ECS.Component;
@@ -18,7 +20,7 @@ public class GameOverSystem implements System {
     }
 
     @Override
-    public void update(long gameFrame, World world) throws InterruptedException {
+    public void update(long gameFrame, float delta,  World world) throws InterruptedException {
         ArrayList<Component[]> components = world.getEntitiesWithComponents(new int[]{
                 CmpId.PLAYER_CONTROLLED.ordinal()
         });
@@ -36,6 +38,12 @@ public class GameOverSystem implements System {
             Game.gameOver = true;
             Game.initGameOver = true;
             gameScreen.gameOver = true;
+
+            if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+                Game.gameOver = false;
+                Game.initGameOver = false;
+                gameScreen.gameOver = false;
+            }
         }
     }
 }

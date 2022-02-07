@@ -40,7 +40,7 @@ public class Game implements ActionListener {
     void createWorld() {
         gameOver = false;
 
-        world.addSystem(new PlayerControlledSystem(inputActions));
+//        world.addSystem(new PlayerControlledSystem(inputActions));
         world.addSystem(new JumpSystem());
         world.addSystem(new MoveSystem());
         world.addSystem(new ObstacleGeneratorSystem(5, 10, 100, 100));
@@ -123,7 +123,7 @@ public class Game implements ActionListener {
                 time = 8;
             }
 
-            game.world.update(gameFrame);
+//            game.world.update(gameFrame);
 
             game.renderer.repaint();
 
