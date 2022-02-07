@@ -5,9 +5,10 @@ import java.util.List;
 
 public class World {
     public static final int MAX_ENTITIES = 16;
-    public static final int MAX_COMPONENTS = 8;
+    public static final int MAX_COMPONENTS = 10;
 
     List<System> systems = new ArrayList<>();
+    List<System> renderSystems = new ArrayList<>();
     Component[][] components = new Component[MAX_COMPONENTS][MAX_ENTITIES];
 
 
@@ -36,12 +37,22 @@ public class World {
         systems.add(system);
     }
 
+   public void addRenderSystem(System system) {
+        renderSystems.add(system);
+    }
+
     public void removeAllSystems() {
         systems.clear();
     }
 
-    public void update(long gameFrame, float delta) throws InterruptedException {
+    public void updateSystems(long gameFrame, float delta) throws InterruptedException {
         for (System s : systems) {
+            s.update(gameFrame, delta, this);
+        }
+    }
+
+    public void updateRenderSystems(long gameFrame, float delta) throws InterruptedException {
+        for (System s : renderSystems) {
             s.update(gameFrame, delta, this);
         }
     }

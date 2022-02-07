@@ -53,7 +53,7 @@ public class CollisionSystem implements System {
         }
     }
 
-    CollisionType intersects(Position posA, Collision colA, Position posB, Collision colB) {
+    private CollisionType intersects(Position posA, Collision colA, Position posB, Collision colB) {
 
         colA.rectangle.x = posA.x;
         colA.rectangle.y = posA.y;
@@ -73,13 +73,13 @@ public class CollisionSystem implements System {
         return CollisionType.NONE;
     }
 
-    public boolean touch (Rectangle s, Rectangle r) {
-        boolean lewym =  s.x == r.x + r.width && s.x + s.width > r.x && s.y < r.y + r.height && s.y + s.height > r.y;
-        boolean prawym =  s.x < r.x + r.width && s.x + s.width == r.x && s.y < r.y + r.height && s.y + s.height > r.y;
-        boolean dolem =  s.x < r.x + r.width && s.x + s.width > r.x && s.y == r.y + r.height && s.y + s.height > r.y;
-        boolean gora =  s.x < r.x + r.width && s.x + s.width > r.x && s.y < r.y + r.height && s.y + s.height == r.y;
+    private boolean touch (Rectangle s, Rectangle r) {
+        boolean left =  s.x == r.x + r.width && s.x + s.width > r.x && s.y < r.y + r.height && s.y + s.height > r.y;
+        boolean right =  s.x < r.x + r.width && s.x + s.width == r.x && s.y < r.y + r.height && s.y + s.height > r.y;
+        boolean down =  s.x < r.x + r.width && s.x + s.width > r.x && s.y == r.y + r.height && s.y + s.height > r.y;
+        boolean up =  s.x < r.x + r.width && s.x + s.width > r.x && s.y < r.y + r.height && s.y + s.height == r.y;
 
-        return lewym || prawym || dolem || gora;
+        return left || right || down || up;
     }
 
 }

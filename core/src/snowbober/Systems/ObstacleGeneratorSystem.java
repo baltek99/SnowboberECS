@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import snowbober.Components.*;
 import snowbober.ECS.World;
 import snowbober.ECS.System;
+import snowbober.Util.ConstVals;
 
 public class ObstacleGeneratorSystem implements System {
     public int min, max, current, spawnRate;
@@ -27,10 +28,19 @@ public class ObstacleGeneratorSystem implements System {
         if (gameFrame % spawnRate == 0) {
             java.lang.System.out.println(gameFrame);
             int obstacle = current;
-            current = ((current + 1) % (max - min)) + min;
+//            current = ((current + 1) % (max - min)) + min;
+            current++;
+            if (current > max) current = min;
 
-            if (obstacle % 3 == 0) createBox(world, obstacle);
-            else createRail(world, obstacle);
+            java.lang.System.out.println("NUMER " + obstacle);
+            if (obstacle % 3 == 0) {
+                createBox(world, obstacle);
+                createScorePoint(world, obstacle + 5, width + 270);
+            }
+            else {
+                createRail(world, obstacle);
+                createScorePoint(world, obstacle + 5, width + 500);
+            }
         }
     }
 
@@ -46,5 +56,12 @@ public class ObstacleGeneratorSystem implements System {
         world.addComponentToEntity(box, new Visual(texBox, 70, 70));
         world.addComponentToEntity(box, new Move(-3));
         world.addComponentToEntity(box, new Collision(70,70, ObstacleType.BOX));
+    }
+
+    public void createScorePoint(World world, int scorePoint, int positionX) {
+        world.addComponentToEntity(scorePoint, new Position(positionX, 0));
+        world.addComponentToEntity(scorePoint, new Move(-3));
+        world.addComponentToEntity(scorePoint, new Collision(1, ConstVals.V_HEIGHT, ObstacleType.SCORE_POINT));
+        world.addComponentToEntity(scorePoint, new Visual(texBox, 1, ConstVals.V_HEIGHT));
     }
 }

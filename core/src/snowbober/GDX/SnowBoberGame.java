@@ -31,7 +31,7 @@ public class SnowBoberGame extends Game {
 
         world.addSystem(new MoveSystem());
         world.addSystem(new BackgroundGeneratorSystem(V_WIDTH, V_HEIGHT));
-        world.addSystem(new ObstacleGeneratorSystem(5, 10, V_WIDTH, V_HEIGHT));
+        world.addSystem(new ObstacleGeneratorSystem(5, 7, V_WIDTH, V_HEIGHT));
         world.addSystem(new PlayerControlledSystem());
         world.addSystem(new CollisionSystem(batch));
         world.addSystem(new PlayerCollisionSystem());
@@ -39,8 +39,10 @@ public class SnowBoberGame extends Game {
         world.addSystem(new JumpSystem());
         world.addSystem(new RailSystem());
         world.addSystem(new SpeedSystem());
-        world.addSystem(new RenderSystem(batch));
         world.addSystem(new GameOverSystem(gameScreen));
+
+        world.addRenderSystem(new RenderSystem(batch));
+        world.addRenderSystem(new ScoreRenderSystem(batch));
 
         int background1 = 0;
         Texture backgroundTexture = new Texture("background.jpg");
@@ -54,13 +56,18 @@ public class SnowBoberGame extends Game {
         world.addComponentToEntity(background2, new Visual(background2Texture, V_WIDTH, V_HEIGHT));
         world.addComponentToEntity(background2, new Move(-2));
 
-        int player = 11;
+        int scoreLabel = 2;
+        world.addComponentToEntity(scoreLabel, new Position(V_WIDTH - 200, 50));
+        world.addComponentToEntity(scoreLabel, new ScoreBind(15));
+
+        int player = 15;
         Texture playerTexture = new Texture("bober-stand.png");
         world.addComponentToEntity(player, new Position(ConstVals.BOBER_DEFAULT_POSITION_X, ConstVals.BOBER_DEFAULT_POSITION_Y));
         world.addComponentToEntity(player, new Jump());
         world.addComponentToEntity(player, new PlayerControlled(PlayerState.IDLE));
         world.addComponentToEntity(player, new Collision(ConstVals.BOBER_DEFAULT_WIDTH, ConstVals.BOBER_DEFAULT_HEIGHT, ObstacleType.PLAYER));
         world.addComponentToEntity(player, new Visual(playerTexture, ConstVals.BOBER_DEFAULT_WIDTH, ConstVals.BOBER_DEFAULT_HEIGHT));
+        world.addComponentToEntity(player, new Score(0));
     }
 
     @Override
