@@ -7,7 +7,6 @@ import snowbober.Components.CmpId;
 import snowbober.ECS.Component;
 import snowbober.ECS.World;
 import snowbober.GDX.Screens.GameScreen;
-import snowbober.Util.Game;
 
 import java.util.ArrayList;
 
@@ -35,15 +34,7 @@ public class GameOverSystem implements System {
 
         if (!pcExist) {
             java.lang.System.out.println("GAME OVER");
-            Game.gameOver = true;
-            Game.initGameOver = true;
             gameScreen.gameOver = true;
-
-            if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
-                Game.gameOver = false;
-                Game.initGameOver = false;
-                gameScreen.gameOver = false;
-            }
         }
     }
 }

@@ -33,16 +33,22 @@ public class World {
 //
 
 
+    public void resetWorld() {
+        removeAllSystems();
+        killAllEntities();
+    }
+
     public void addSystem(System system) {
         systems.add(system);
     }
 
-   public void addRenderSystem(System system) {
+    public void addRenderSystem(System system) {
         renderSystems.add(system);
     }
 
     public void removeAllSystems() {
         systems.clear();
+        renderSystems.clear();
     }
 
     public void updateSystems(long gameFrame, float delta) throws InterruptedException {

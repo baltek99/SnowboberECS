@@ -12,15 +12,9 @@ import snowbober.Util.ConstVals;
 import java.util.ArrayList;
 
 public class PlayerControlledSystem implements System {
-//    Queue<InputActions> actionsQueue;
-
-    public PlayerControlledSystem() {
-//        actionsQueue = queue;
-    }
 
     @Override
     public void update(long gameFrame, float delta, World world) {
-//        InputActions action = actionsQueue.poll();
 
         ArrayList<Component[]> components = world.getEntitiesWithComponents(new int[]{
                 CmpId.POSITION.ordinal(),
@@ -39,14 +33,14 @@ public class PlayerControlledSystem implements System {
 
             if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
                 if (pctrl.playerState == PlayerState.SLIDING) {
-                    java.lang.System.out.println("SKOK Z RAILA!");
+//                    java.lang.System.out.println("SKOK Z RAILA!");
                     pctrl.playerState = PlayerState.JUMPING_ON_RAIL;
                     jump.jumpFrom = ConstVals.JUMP_FROM_RAIL_Y;
                     jump.startJumpFrame = gameFrame;
                     Texture texture = new Texture("bober-jump.png");
                     components.get(3)[entity] = new Visual(texture, ConstVals.BOBER_IN_JUMP_WIDTH, ConstVals.BOBER_IN_JUMP_HEIGHT);
                 } else if (pctrl.playerState != PlayerState.JUMPING && pctrl.playerState != PlayerState.JUMPING_ON_RAIL) {
-                    java.lang.System.out.println("SKOK ZWYKlY");
+//                    java.lang.System.out.println("SKOK ZWYKlY");
                     pctrl.playerState = PlayerState.JUMPING;
                     jump.jumpFrom = ConstVals.JUMP_FROM_GROUND_Y;
                     jump.startJumpFrame = gameFrame;
@@ -56,6 +50,5 @@ public class PlayerControlledSystem implements System {
             }
 
         }
-
     }
 }

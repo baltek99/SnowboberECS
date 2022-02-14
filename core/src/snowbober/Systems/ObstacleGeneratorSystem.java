@@ -12,12 +12,12 @@ public class ObstacleGeneratorSystem implements System {
     public Texture texRail;
     public int width, height;
 
-    public ObstacleGeneratorSystem(int min, int max, int width, int height) {
-        this.min = min;
-        this.max = max;
+    public ObstacleGeneratorSystem(int minIndex, int maxIndex, int width, int height) {
+        this.min = minIndex;
+        this.max = maxIndex;
         this.width = width;
         this.height = height;
-        current = min;
+        current = minIndex;
         spawnRate = 300;
         texBox = new Texture("box.png");
         texRail = new Texture("rail.png");
@@ -26,13 +26,13 @@ public class ObstacleGeneratorSystem implements System {
     @Override
     public void update(long gameFrame, float delta, World world) throws InterruptedException {
         if (gameFrame % spawnRate == 0) {
-            java.lang.System.out.println(gameFrame);
+//            java.lang.System.out.println(gameFrame);
             int obstacle = current;
 //            current = ((current + 1) % (max - min)) + min;
             current++;
             if (current > max) current = min;
 
-            java.lang.System.out.println("NUMER " + obstacle);
+//            java.lang.System.out.println("NUMER " + obstacle);
             if (obstacle % 3 == 0) {
                 createBox(world, obstacle);
                 createScorePoint(world, obstacle + 5, width + 270);

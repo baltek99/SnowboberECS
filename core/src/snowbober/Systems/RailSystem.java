@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.Texture;
 import snowbober.Components.*;
 import snowbober.ECS.Component;
 import snowbober.ECS.World;
-import snowbober.Util.Game;
 import snowbober.ECS.System;
 
 import java.util.ArrayList;

@@ -1,23 +1,6 @@
 package snowbober.Util;
 
-import javax.imageio.ImageIO;
-import java.io.File;
-import java.io.IOException;
-
 public class Util {
-    public static Texture loadImage(String path, float scale) {
-        Texture texture = new Texture();
-        File imageFile = new File(path);
-        try {
-            texture.img = ImageIO.read(imageFile);
-            texture.imgWidth = (int) (texture.img.getWidth() * scale);
-            texture.imgHeight = (int) (texture.img.getHeight() * scale);
-        } catch (IOException e) {
-            System.err.println("Błąd odczytu tekstury");
-            e.printStackTrace();
-        }
-        return texture;
-    }
 
     /**
      * Linearly interpolates a value between two floats
