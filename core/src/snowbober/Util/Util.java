@@ -28,4 +28,12 @@ public class Util {
         }
         return easeOut(flip(x) / 0.5f);
     }
+
+    public static float easeInOutCubic(float x) {
+        return x < 0.5 ? 4 * x * x * x : 1 - (float) Math.pow(-2 * x + 2, 3) / 2;
+    }
+
+    public static float easeInQuint(float x) {
+        return (float) Math.pow(x, 3);
+    }
 }

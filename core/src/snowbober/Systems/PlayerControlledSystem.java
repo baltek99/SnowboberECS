@@ -31,7 +31,7 @@ public class PlayerControlledSystem implements System {
             Jump jump = ((Jump) components.get(2)[entity]);
             Visual vis = (Visual) components.get(3)[entity];
 
-            if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+            if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
                 if (pctrl.playerState == PlayerState.SLIDING) {
 //                    java.lang.System.out.println("SKOK Z RAILA!");
                     pctrl.playerState = PlayerState.JUMPING_ON_RAIL;
@@ -46,6 +46,20 @@ public class PlayerControlledSystem implements System {
                     jump.startJumpFrame = gameFrame;
                     Texture texture = new Texture("bober-jump.png");
                     components.get(3)[entity] = new Visual(texture, ConstVals.BOBER_IN_JUMP_WIDTH, ConstVals.BOBER_IN_JUMP_HEIGHT);
+                }
+            } else if (Gdx.input.isKeyJustPressed(Input.Keys.CONTROL_LEFT)) {
+                if (pctrl.playerState == PlayerState.IDLE) {
+                    pctrl.playerState = PlayerState.CROUCH;
+
+                    pos.y = 100;
+                    Texture texture = new Texture("bober-jump.png");
+                    components.get(3)[entity] = new Visual(texture, ConstVals.BOBER_IN_JUMP_WIDTH, ConstVals.BOBER_IN_JUMP_HEIGHT);
+                } else if (pctrl.playerState == PlayerState.CROUCH) {
+                    pctrl.playerState = PlayerState.IDLE;
+
+                    pos.y = ConstVals.IDLE_RIDE_Y;
+                    Texture texture = new Texture("bober-stand.png");
+                    components.get(3)[entity] = new Visual(texture, ConstVals.BOBER_DEFAULT_WIDTH, ConstVals.BOBER_DEFAULT_HEIGHT);
                 }
             }
 

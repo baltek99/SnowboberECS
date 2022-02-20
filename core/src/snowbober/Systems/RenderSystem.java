@@ -3,10 +3,13 @@ package snowbober.Systems;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import snowbober.Components.*;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import snowbober.Components.CmpId;
+import snowbober.Components.Position;
+import snowbober.Components.Visual;
 import snowbober.ECS.Component;
-import snowbober.ECS.World;
 import snowbober.ECS.System;
+import snowbober.ECS.World;
 
 import java.util.ArrayList;
 
@@ -35,7 +38,8 @@ public class RenderSystem implements System {
 
             batch.begin();
 //            java.lang.System.out.println("delta " + delta);
-            batch.draw(vis.texture, pos.x, pos.y, vis.imgWidth, vis.imgHeight);
+
+            batch.draw(vis.texture, pos.x, pos.y, vis.imgWidth/2f, vis.imgHeight/2f, vis.imgWidth, vis.imgHeight, 1, 1, vis.rotation);
             batch.end();
         }
     }

@@ -35,18 +35,31 @@ public class JumpSystem implements System {
                 if (gameFrame == jump.startJumpFrame + duration) {
                     pctrl.playerState = PlayerState.IDLE;
                     pos.y = ConstVals.IDLE_RIDE_Y;
+                    vis.rotation = 0;
                     Texture texture = new Texture("bober-stand.png");
                     components.get(3)[entity] = new Visual(texture, ConstVals.BOBER_DEFAULT_WIDTH, ConstVals.BOBER_DEFAULT_HEIGHT);
                 } else {
+//                    if ((gameFrame - jump.startJumpFrame) / duration < 0.1)
+//                        pos.y = ConstVals.JUMP_FROM_GROUND_Y;
+
                     pos.y = (int) Util.lerp(
                             jump.jumpFrom,
                             jump.jumpFrom + jumpHeight,
                             Util.spike((gameFrame - jump.startJumpFrame) / duration)
                     );
+
+//                    java.lang.System.out.println((gameFrame - jump.startJumpFrame) / duration);
+                    if (pctrl.playerState == PlayerState.JUMPING_ON_RAIL) {
+                        vis.rotation += 3.4f;
+                    } else {
+                        if ((gameFrame - jump.startJumpFrame) / duration < 0.15f)
+                            vis.rotation += 1.3f;
+
+                        else if (vis.rotation > -10)
+                            vis.rotation -= 0.5;
+                    }
                 }
             }
         }
     }
-
-
 }

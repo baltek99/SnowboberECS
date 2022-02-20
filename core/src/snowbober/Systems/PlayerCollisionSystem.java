@@ -42,6 +42,9 @@ public class PlayerCollisionSystem implements System {
                 Texture texture = new Texture("bober-rail.png");
                 components.get(3)[entity] = new Visual(texture, ConstVals.BOBER_ON_RAIL_WIDTH, ConstVals.BOBER_ON_RAIL_HEIGHT);
                 world.removeComponentFromEntity(entity, cr);
+            } else if (cr.obstacle == ObstacleType.GRID && pc.playerState != PlayerState.CROUCH) {
+                if (cr.type == CollisionType.INTERSECT)
+                    world.killEntity(entity);
             }
         }
     }

@@ -50,7 +50,7 @@ public class GameScreen implements Screen {
 
         world.addSystem(new MoveSystem());
         world.addSystem(new BackgroundGeneratorSystem(V_WIDTH, V_HEIGHT));
-        world.addSystem(new ObstacleGeneratorSystem(5, 7, V_WIDTH, V_HEIGHT));
+        world.addSystem(new ObstacleGeneratorSystem(5, 8, V_WIDTH, V_HEIGHT));
         world.addSystem(new PlayerControlledSystem());
         world.addSystem(new CollisionSystem(batch));
         world.addSystem(new PlayerCollisionSystem());
@@ -135,7 +135,7 @@ public class GameScreen implements Screen {
     private GameState updateState(GameState state, long frame, float delta) throws InterruptedException {
         switch (state) {
             case MAIN_MENU:
-                if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+                if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
                     gameplayECS = createGameWorld();
                     gameOver = false;
                     return GameState.GAMEPLAY;
@@ -152,7 +152,7 @@ public class GameScreen implements Screen {
                 gameplayECS.updateRenderSystems(frame, delta);
                 return state;
             case GAME_OVER:
-                if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
+                if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
                     return GameState.MAIN_MENU;
                 }
                 gameOverECS.updateSystems(frame, delta);

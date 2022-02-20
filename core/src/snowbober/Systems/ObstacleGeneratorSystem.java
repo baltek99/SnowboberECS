@@ -10,6 +10,7 @@ public class ObstacleGeneratorSystem implements System {
     public int min, max, current, spawnRate;
     public Texture texBox;
     public Texture texRail;
+    public Texture texGrid;
     public int width, height;
 
     public ObstacleGeneratorSystem(int minIndex, int maxIndex, int width, int height) {
@@ -21,20 +22,22 @@ public class ObstacleGeneratorSystem implements System {
         spawnRate = 300;
         texBox = new Texture("box.png");
         texRail = new Texture("rail.png");
+        texGrid = new Texture("rail.png");
     }
 
     @Override
     public void update(long gameFrame, float delta, World world) throws InterruptedException {
         if (gameFrame % spawnRate == 0) {
-//            java.lang.System.out.println(gameFrame);
             int obstacle = current;
-//            current = ((current + 1) % (max - min)) + min;
             current++;
             if (current > max) current = min;
 
-//            java.lang.System.out.println("NUMER " + obstacle);
             if (obstacle % 3 == 0) {
                 createBox(world, obstacle);
+                createScorePoint(world, obstacle + 5, width + 270);
+            }
+            else if (obstacle % 4 == 0) {
+                createGrid(world, obstacle);
                 createScorePoint(world, obstacle + 5, width + 270);
             }
             else {
@@ -44,18 +47,25 @@ public class ObstacleGeneratorSystem implements System {
         }
     }
 
-    public void createRail(World world, int rail) {
-        world.addComponentToEntity(rail, new Position(width, 110));
-        world.addComponentToEntity(rail, new Visual(texRail, 300, 60));
-        world.addComponentToEntity(rail, new Move(-3));
-        world.addComponentToEntity(rail, new Collision(260,60, ObstacleType.RAIL));
+    private void createGrid(World world, int  obstacleIndex) {
+        world.addComponentToEntity(obstacleIndex, new Position(width, 110));
+        world.addComponentToEntity(obstacleIndex, new Visual(texGrid, 200, 350));
+        world.addComponentToEntity(obstacleIndex, new Move(-3));
+        world.addComponentToEntity(obstacleIndex, new Collision(200,350, ObstacleType.GRID));
     }
 
-    public void createBox(World world, int box) {
-        world.addComponentToEntity(box, new Position(width, 100));
-        world.addComponentToEntity(box, new Visual(texBox, 70, 70));
-        world.addComponentToEntity(box, new Move(-3));
-        world.addComponentToEntity(box, new Collision(70,70, ObstacleType.BOX));
+    public void createRail(World world, int  obstacleIndex) {
+        world.addComponentToEntity(obstacleIndex, new Position(width, 110));
+        world.addComponentToEntity(obstacleIndex, new Visual(texRail, 300, 60));
+        world.addComponentToEntity(obstacleIndex, new Move(-3));
+        world.addComponentToEntity(obstacleIndex, new Collision(260,60, ObstacleType.RAIL));
+    }
+
+    public void createBox(World world, int obstacleIndex) {
+        world.addComponentToEntity(obstacleIndex, new Position(width, 100));
+        world.addComponentToEntity(obstacleIndex, new Visual(texBox, 70, 70));
+        world.addComponentToEntity(obstacleIndex, new Move(-3));
+        world.addComponentToEntity(obstacleIndex, new Collision(70,70, ObstacleType.BOX));
     }
 
     public void createScorePoint(World world, int scorePoint, int positionX) {
