@@ -15,7 +15,7 @@ public class Util {
     }
 
     public static float easeOut(float x) {
-        return 1 - (float) Math.pow(1 - x, 2.8);
+        return 1 - (float) Math.pow(1 - x, 3);
     }
 
     public static float flip(float x) {
@@ -34,6 +34,6 @@ public class Util {
     }
 
     public static float easeInQuint(float x) {
-        return (float) Math.pow(x, 3);
+        return (float) Math.pow(x, 5);
     }
 }

@@ -11,8 +11,8 @@ import snowbober.Util.Util;
 import java.util.ArrayList;
 
 public class JumpSystem implements System {
-    static final int jumpHeight = 180;
-    static final float duration = 105;
+    static final int jumpHeight = 120;
+    static final float duration = 110;
 
     @Override
     public void update(long gameFrame, float delta, World world) {

@@ -29,8 +29,8 @@ public class BackgroundGeneratorSystem implements System {
 
             Position pos = (Position) components.get(0)[entity];
 
-            if (Math.abs(pos.x) >= width) {
-                pos.x = width;
+            if (pos.x <= -width) {
+                pos.x = width + pos.x % width;
             }
         }
     }

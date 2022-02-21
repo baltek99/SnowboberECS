@@ -12,6 +12,7 @@ public class ObstacleGeneratorSystem implements System {
     public Texture texRail;
     public Texture texGrid;
     public int width, height;
+    public int speed;
 
     public ObstacleGeneratorSystem(int minIndex, int maxIndex, int width, int height) {
         this.min = minIndex;
@@ -20,6 +21,7 @@ public class ObstacleGeneratorSystem implements System {
         this.height = height;
         current = minIndex;
         spawnRate = 300;
+        speed = -3;
         texBox = new Texture("box.png");
         texRail = new Texture("rail.png");
         texGrid = new Texture("rail.png");
@@ -38,7 +40,7 @@ public class ObstacleGeneratorSystem implements System {
             }
             else if (obstacle % 4 == 0) {
                 createGrid(world, obstacle);
-                createScorePoint(world, obstacle + 5, width + 270);
+                createScorePoint(world, obstacle + 5, width + 500);
             }
             else {
                 createRail(world, obstacle);
@@ -50,28 +52,28 @@ public class ObstacleGeneratorSystem implements System {
     private void createGrid(World world, int  obstacleIndex) {
         world.addComponentToEntity(obstacleIndex, new Position(width, 110));
         world.addComponentToEntity(obstacleIndex, new Visual(texGrid, 200, 350));
-        world.addComponentToEntity(obstacleIndex, new Move(-3));
-        world.addComponentToEntity(obstacleIndex, new Collision(200,350, ObstacleType.GRID));
+        world.addComponentToEntity(obstacleIndex, new Move(speed));
+        world.addComponentToEntity(obstacleIndex, new Collision(198,350, ObstacleType.GRID));
     }
 
     public void createRail(World world, int  obstacleIndex) {
         world.addComponentToEntity(obstacleIndex, new Position(width, 110));
         world.addComponentToEntity(obstacleIndex, new Visual(texRail, 300, 60));
-        world.addComponentToEntity(obstacleIndex, new Move(-3));
+        world.addComponentToEntity(obstacleIndex, new Move(speed));
         world.addComponentToEntity(obstacleIndex, new Collision(260,60, ObstacleType.RAIL));
     }
 
     public void createBox(World world, int obstacleIndex) {
         world.addComponentToEntity(obstacleIndex, new Position(width, 100));
         world.addComponentToEntity(obstacleIndex, new Visual(texBox, 70, 70));
-        world.addComponentToEntity(obstacleIndex, new Move(-3));
+        world.addComponentToEntity(obstacleIndex, new Move(speed));
         world.addComponentToEntity(obstacleIndex, new Collision(70,70, ObstacleType.BOX));
     }
 
     public void createScorePoint(World world, int scorePoint, int positionX) {
         world.addComponentToEntity(scorePoint, new Position(positionX, 0));
-        world.addComponentToEntity(scorePoint, new Move(-3));
+        world.addComponentToEntity(scorePoint, new Move(speed));
         world.addComponentToEntity(scorePoint, new Collision(1, ConstVals.V_HEIGHT, ObstacleType.SCORE_POINT));
-        world.addComponentToEntity(scorePoint, new Visual(texBox, 1, ConstVals.V_HEIGHT));
+//        world.addComponentToEntity(scorePoint, new Visual(texBox, 1, ConstVals.V_HEIGHT));
     }
 }

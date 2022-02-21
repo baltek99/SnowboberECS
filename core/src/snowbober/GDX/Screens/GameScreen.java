@@ -140,7 +140,9 @@ public class GameScreen implements Screen {
                     gameOver = false;
                     return GameState.GAMEPLAY;
                 }
-                mainMenuECS.updateSystems(frame, delta);
+                if (frame % 2 == 0) {
+                    mainMenuECS.updateSystems(frame, delta);
+                }
                 mainMenuECS.updateRenderSystems(frame, delta);
                 return state;
             case GAMEPLAY:

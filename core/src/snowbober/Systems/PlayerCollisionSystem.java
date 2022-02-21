@@ -11,6 +11,14 @@ import java.util.ArrayList;
 
 public class PlayerCollisionSystem implements System {
 
+    //todo problem do rozwiązania
+//
+//    przeszkody poruszają się z daną prędkością (domyślnie 3), bober stoi w danym miejscu
+//    jeśli szerokość obiektu kolizji nie dzieli się przez 3 to bober nigdy nie będzie miał kolizji
+//    typu TOUCH pod koniec pokonywania przeszkody.
+//    Jeśli przeszkody będą przyśpieszać (a będą) to może być problem z określeniem typu kolizji
+//
+
     @Override
     public void update(long gameFrame, float delta, World world) {
         ArrayList<Component[]> components = world.getEntitiesWithComponents(new int[]{
@@ -43,8 +51,12 @@ public class PlayerCollisionSystem implements System {
                 components.get(3)[entity] = new Visual(texture, ConstVals.BOBER_ON_RAIL_WIDTH, ConstVals.BOBER_ON_RAIL_HEIGHT);
                 world.removeComponentFromEntity(entity, cr);
             } else if (cr.obstacle == ObstacleType.GRID && pc.playerState != PlayerState.CROUCH) {
-                if (cr.type == CollisionType.INTERSECT)
+                if (cr.type == CollisionType.INTERSECT) {
+                    java.lang.System.out.println("Zabijam");
                     world.killEntity(entity);
+                } else {
+                    world.removeComponentFromEntity(entity, cr);
+                }
             }
         }
     }

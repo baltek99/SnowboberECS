@@ -1,14 +1,11 @@
 package snowbober.Systems;
 
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import snowbober.Components.*;
 import snowbober.ECS.Component;
-import snowbober.ECS.World;
 import snowbober.ECS.System;
+import snowbober.ECS.World;
 
 import java.util.ArrayList;
 
@@ -48,7 +45,6 @@ public class CollisionSystem implements System {
 
                 world.addComponentToEntity(entityA, new CollisionResponse(entityB, type, colB.type));
                 world.addComponentToEntity(entityB, new CollisionResponse(entityA, type, colA.type));
-
             }
         }
     }
@@ -73,11 +69,11 @@ public class CollisionSystem implements System {
         return CollisionType.NONE;
     }
 
-    private boolean touch (Rectangle s, Rectangle r) {
-        boolean left =  s.x == r.x + r.width && s.x + s.width > r.x && s.y < r.y + r.height && s.y + s.height > r.y;
-        boolean right =  s.x < r.x + r.width && s.x + s.width == r.x && s.y < r.y + r.height && s.y + s.height > r.y;
-        boolean down =  s.x < r.x + r.width && s.x + s.width > r.x && s.y == r.y + r.height && s.y + s.height > r.y;
-        boolean up =  s.x < r.x + r.width && s.x + s.width > r.x && s.y < r.y + r.height && s.y + s.height == r.y;
+    private boolean touch(Rectangle s, Rectangle r) {
+        boolean left = s.x == r.x + r.width && s.x + s.width > r.x && s.y < r.y + r.height && s.y + s.height > r.y;
+        boolean right = s.x < r.x + r.width && s.x + s.width == r.x && s.y < r.y + r.height && s.y + s.height > r.y;
+        boolean down = s.x < r.x + r.width && s.x + s.width > r.x && s.y == r.y + r.height && s.y + s.height > r.y;
+        boolean up = s.x < r.x + r.width && s.x + s.width > r.x && s.y < r.y + r.height && s.y + s.height == r.y;
 
         return left || right || down || up;
     }
