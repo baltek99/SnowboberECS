@@ -16,6 +16,10 @@ import snowbober.GDX.SnowBoberGame;
 import snowbober.Systems.*;
 import snowbober.Util.ConstVals;
 
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
+
 public class GameScreen implements Screen {
 
     public static final int V_WIDTH = ConstVals.V_WIDTH;
@@ -58,6 +62,7 @@ public class GameScreen implements Screen {
         world.addSystem(new JumpSystem());
         world.addSystem(new RailSystem());
         world.addSystem(new SpeedSystem());
+        world.addSystem(new ImmortalSystem());
         world.addSystem(new GameOverSystem(this));
 
         world.addRenderSystem(new RenderSystem(batch));
@@ -79,6 +84,24 @@ public class GameScreen implements Screen {
         world.addComponentToEntity(scoreLabel, new Position(V_WIDTH - 200, 50));
         world.addComponentToEntity(scoreLabel, new ScoreBind(15));
 
+        int life1 = 16;
+        Texture lifeTexture = new Texture("bober-stand.png");
+        world.addComponentToEntity(life1, new Position(V_WIDTH - 250, 450));
+        world.addComponentToEntity(life1, new Visual(lifeTexture, 50, 50));
+
+        int life2 = 17;
+        world.addComponentToEntity(life2, new Position(V_WIDTH - 180, 450));
+        world.addComponentToEntity(life2, new Visual(lifeTexture, 50, 50));
+
+        int life3 = 18;
+        world.addComponentToEntity(life3, new Position(V_WIDTH - 110 , 450));
+        world.addComponentToEntity(life3, new Visual(lifeTexture, 50, 50));
+
+        Queue<Integer> lifes = new LinkedList<>();
+        lifes.add(16);
+        lifes.add(17);
+        lifes.add(18);
+
         int player = 15;
         Texture playerTexture = new Texture("bober-stand.png");
         world.addComponentToEntity(player, new Position(ConstVals.BOBER_DEFAULT_POSITION_X, ConstVals.BOBER_DEFAULT_POSITION_Y));
@@ -87,6 +110,7 @@ public class GameScreen implements Screen {
         world.addComponentToEntity(player, new Collision(ConstVals.BOBER_DEFAULT_WIDTH, ConstVals.BOBER_DEFAULT_HEIGHT, ObstacleType.PLAYER));
         world.addComponentToEntity(player, new Visual(playerTexture, ConstVals.BOBER_DEFAULT_WIDTH, ConstVals.BOBER_DEFAULT_HEIGHT));
         world.addComponentToEntity(player, new Score(0));
+        world.addComponentToEntity(player, new Lives(lifes));
 
         return world;
     }

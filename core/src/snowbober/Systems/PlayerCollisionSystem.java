@@ -26,7 +26,8 @@ public class PlayerCollisionSystem implements System {
                 CmpId.COLLISION_RESPONSE.ordinal(),
                 CmpId.POSITION.ordinal(),
                 CmpId.VISUAL.ordinal(),
-                CmpId.SCORE.ordinal()
+                CmpId.SCORE.ordinal(),
+                CmpId.LIVES.ordinal()
         });
 
         for (int entity = 0; entity < world.MAX_ENTITIES; entity++) {
@@ -37,14 +38,15 @@ public class PlayerCollisionSystem implements System {
             Position pos = (Position) components.get(2)[entity];
             Visual vis = (Visual) components.get(3)[entity];
             Score score = (Score) components.get(4)[entity];
+            Lives liv = (Lives) components.get(5)[entity];
 
             if (cr.obstacle == ObstacleType.SCORE_POINT) {
                 score.score++;
                 world.killEntity(cr.collidingEntityId);
                 world.removeComponentFromEntity(entity, cr);
             } else if (cr.obstacle == ObstacleType.BOX || (cr.obstacle == ObstacleType.RAIL && pc.playerState == PlayerState.IDLE)) {
-                world.killEntity(entity);
-            } else if (cr.obstacle == ObstacleType.RAIL && pc.playerState == PlayerState.JUMPING) {
+                removeLifeOrKill(world, entity, liv);
+            } else if (cr.obstacle == ObstacleType.RAIL && (pc.playerState == PlayerState.JUMPING || pc.playerState == PlayerState.JUMPING_FROM_CROUCH)) {
                 pos.y = ConstVals.SLIDING_ON_RAIL_Y;
                 pc.playerState = PlayerState.SLIDING;
                 Texture texture = new Texture("bober-rail.png");
@@ -52,12 +54,26 @@ public class PlayerCollisionSystem implements System {
                 world.removeComponentFromEntity(entity, cr);
             } else if (cr.obstacle == ObstacleType.GRID && pc.playerState != PlayerState.CROUCH) {
                 if (cr.type == CollisionType.INTERSECT) {
-                    java.lang.System.out.println("Zabijam");
-                    world.killEntity(entity);
+//                    java.lang.System.out.println("Zabijam");
+                    removeLifeOrKill(world, entity, liv);
                 } else {
                     world.removeComponentFromEntity(entity, cr);
                 }
             }
+        }
+    }
+
+    private void removeLifeOrKill(World world, int entity, Lives liv) {
+        if (liv.livesIds.size() == 1) {
+            world.killEntity(entity);
+            world.killEntity(liv.livesIds.poll());
+//            java.lang.System.out.println("Zabijam");
+        } else {
+            int lifeID = liv.livesIds.poll();
+            world.killEntity(lifeID);
+            world.removeComponentFromEntity(entity, CmpId.COLLISION.ordinal());
+            world.removeComponentFromEntity(entity, CmpId.COLLISION_RESPONSE.ordinal());
+//            java.lang.System.out.println("Tracisz życie!");
         }
     }
 }

@@ -6,6 +6,7 @@ import snowbober.Components.Position;
 import snowbober.ECS.Component;
 import snowbober.ECS.System;
 import snowbober.ECS.World;
+import snowbober.Util.ConstVals;
 
 import java.util.ArrayList;
 
@@ -24,14 +25,14 @@ public class SpeedSystem implements System {
                 CmpId.COLLISION.ordinal(),
         });
 
-        if (gameFrame % 500 == 0) {
+        if (gameFrame % ConstVals.NUMBER_OF_FRAMES_TO_INCREMENT == 0) {
             obstacleSpeed--;
         }
 
         for (int entity = 0; entity < World.MAX_ENTITIES; entity++) {
             if (!World.isEntityOk(entity, obstacleComponents)) {
                 if (!World.isEntityOk(entity, backgroundComponents)) continue;
-                if (gameFrame % 500 == 0) {
+                if (gameFrame % ConstVals.NUMBER_OF_FRAMES_TO_INCREMENT == 0) {
                     Move mov = (Move) backgroundComponents.get(0)[entity];
                     mov.speed--;
                 }

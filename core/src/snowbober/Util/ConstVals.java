@@ -10,6 +10,8 @@ public class ConstVals {
     public static final int BOBER_DEFAULT_POSITION_X = 100;
     public static final int BOBER_DEFAULT_POSITION_Y = 70;
 
+    public static final int NUMBER_OF_FRAMES_TO_INCREMENT = 1000;
+
     // TEXTURES REGION
     public static final int BOBER_DEFAULT_WIDTH = 180;
     public static final int BOBER_DEFAULT_HEIGHT = 215;

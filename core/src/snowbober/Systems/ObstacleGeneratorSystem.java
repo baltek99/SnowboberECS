@@ -53,7 +53,7 @@ public class ObstacleGeneratorSystem implements System {
         world.addComponentToEntity(obstacleIndex, new Position(width, 110));
         world.addComponentToEntity(obstacleIndex, new Visual(texGrid, 200, 350));
         world.addComponentToEntity(obstacleIndex, new Move(speed));
-        world.addComponentToEntity(obstacleIndex, new Collision(198,350, ObstacleType.GRID));
+        world.addComponentToEntity(obstacleIndex, new Collision(168,350, ObstacleType.GRID));
     }
 
     public void createRail(World world, int  obstacleIndex) {

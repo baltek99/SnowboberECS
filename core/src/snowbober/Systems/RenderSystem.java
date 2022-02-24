@@ -39,7 +39,8 @@ public class RenderSystem implements System {
             batch.begin();
 //            java.lang.System.out.println("delta " + delta);
 
-            batch.draw(vis.texture, pos.x, pos.y, vis.imgWidth/2f, vis.imgHeight/2f, vis.imgWidth, vis.imgHeight, 1, 1, vis.rotation);
+            batch.draw(vis.texture, pos.x, pos.y, vis.imgWidth/2f, vis.imgHeight/2f,
+                    vis.imgWidth, vis.imgHeight, 1, 1, vis.rotation);
             batch.end();
         }
     }

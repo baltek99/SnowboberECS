@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class World {
-    public static final int MAX_ENTITIES = 16;
+    public static final int MAX_ENTITIES = 20;
     public static final int MAX_COMPONENTS = 10;
 
     List<System> systems = new ArrayList<>();
@@ -85,6 +85,10 @@ public class World {
 
     public void removeComponentFromEntity(int entityId, Component cmp) {
         components[cmp.getId()][entityId] = null;
+    }
+
+    public void removeComponentFromEntity(int entityId, int cmpId) {
+        components[cmpId][entityId] = null;
     }
 
     public ArrayList<Component[]> getEntitiesWithComponents(int[] cmpId) {

@@ -39,9 +39,14 @@ public class PlayerControlledSystem implements System {
                     jump.startJumpFrame = gameFrame;
                     Texture texture = new Texture("bober-jump.png");
                     components.get(3)[entity] = new Visual(texture, ConstVals.BOBER_IN_JUMP_WIDTH, ConstVals.BOBER_IN_JUMP_HEIGHT);
-                } else if (pctrl.playerState != PlayerState.JUMPING && pctrl.playerState != PlayerState.JUMPING_ON_RAIL) {
+                } else if (pctrl.playerState != PlayerState.JUMPING && pctrl.playerState != PlayerState.JUMPING_ON_RAIL
+                        && pctrl.playerState != PlayerState.JUMPING_FROM_CROUCH) {
 //                    java.lang.System.out.println("SKOK ZWYKlY");
-                    pctrl.playerState = PlayerState.JUMPING;
+                    if (pctrl.playerState == PlayerState.CROUCH) {
+                        pctrl.playerState = PlayerState.JUMPING_FROM_CROUCH;
+                    } else {
+                        pctrl.playerState = PlayerState.JUMPING;
+                    }
                     jump.jumpFrom = ConstVals.JUMP_FROM_GROUND_Y;
                     jump.startJumpFrame = gameFrame;
                     Texture texture = new Texture("bober-jump.png");
