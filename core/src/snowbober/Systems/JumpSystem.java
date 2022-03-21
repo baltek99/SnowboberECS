@@ -5,7 +5,7 @@ import snowbober.Components.*;
 import snowbober.ECS.Component;
 import snowbober.ECS.System;
 import snowbober.ECS.World;
-import snowbober.Util.ConstVals;
+import snowbober.Util.ConstValues;
 import snowbober.Util.Util;
 
 import java.util.ArrayList;
@@ -24,7 +24,7 @@ public class JumpSystem implements System {
                 CmpId.VISUAL.ordinal()
         });
 
-        if (gameFrame == ConstVals.NUMBER_OF_FRAMES_TO_INCREMENT) {
+        if (gameFrame == ConstValues.NUMBER_OF_FRAMES_TO_INCREMENT) {
             jumpHeight = 110;
             duration = 80;
             rotationSpeed = 4.5f;
@@ -42,10 +42,10 @@ public class JumpSystem implements System {
                     || pctrl.playerState == PlayerState.JUMPING_FROM_CROUCH) {
                 if (gameFrame == jump.startJumpFrame + duration) {
                     pctrl.playerState = PlayerState.IDLE;
-                    pos.y = ConstVals.IDLE_RIDE_Y;
+                    pos.y = ConstValues.IDLE_RIDE_Y;
                     vis.rotation = 0;
                     Texture texture = new Texture("bober-stand.png");
-                    components.get(3)[entity] = new Visual(texture, ConstVals.BOBER_DEFAULT_WIDTH, ConstVals.BOBER_DEFAULT_HEIGHT);
+                    components.get(3)[entity] = new Visual(texture, ConstValues.BOBER_DEFAULT_WIDTH, ConstValues.BOBER_DEFAULT_HEIGHT);
                 } else {
 //                    if ((gameFrame - jump.startJumpFrame) / duration < 0.1)
 //                        pos.y = ConstVals.JUMP_FROM_GROUND_Y;

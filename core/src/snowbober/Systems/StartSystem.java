@@ -2,12 +2,10 @@ package snowbober.Systems;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Texture;
 import snowbober.Components.*;
 import snowbober.ECS.Component;
 import snowbober.ECS.System;
 import snowbober.ECS.World;
-import snowbober.Util.ConstVals;
 
 import java.util.ArrayList;
 

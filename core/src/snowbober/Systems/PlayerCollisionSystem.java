@@ -5,7 +5,7 @@ import snowbober.Components.*;
 import snowbober.ECS.Component;
 import snowbober.ECS.System;
 import snowbober.ECS.World;
-import snowbober.Util.ConstVals;
+import snowbober.Util.ConstValues;
 
 import java.util.ArrayList;
 
@@ -47,14 +47,13 @@ public class PlayerCollisionSystem implements System {
             } else if (cr.obstacle == ObstacleType.BOX || (cr.obstacle == ObstacleType.RAIL && pc.playerState == PlayerState.IDLE)) {
                 removeLifeOrKill(world, entity, liv);
             } else if (cr.obstacle == ObstacleType.RAIL && (pc.playerState == PlayerState.JUMPING || pc.playerState == PlayerState.JUMPING_FROM_CROUCH)) {
-                pos.y = ConstVals.SLIDING_ON_RAIL_Y;
+                pos.y = ConstValues.SLIDING_ON_RAIL_Y;
                 pc.playerState = PlayerState.SLIDING;
                 Texture texture = new Texture("bober-rail.png");
-                components.get(3)[entity] = new Visual(texture, ConstVals.BOBER_ON_RAIL_WIDTH, ConstVals.BOBER_ON_RAIL_HEIGHT);
+                components.get(3)[entity] = new Visual(texture, ConstValues.BOBER_ON_RAIL_WIDTH, ConstValues.BOBER_ON_RAIL_HEIGHT);
                 world.removeComponentFromEntity(entity, cr);
             } else if (cr.obstacle == ObstacleType.GRID && pc.playerState != PlayerState.CROUCH) {
                 if (cr.type == CollisionType.INTERSECT) {
-//                    java.lang.System.out.println("Zabijam");
                     removeLifeOrKill(world, entity, liv);
                 } else {
                     world.removeComponentFromEntity(entity, cr);
@@ -67,13 +66,11 @@ public class PlayerCollisionSystem implements System {
         if (liv.livesIds.size() == 1) {
             world.killEntity(entity);
             world.killEntity(liv.livesIds.poll());
-//            java.lang.System.out.println("Zabijam");
         } else {
             int lifeID = liv.livesIds.poll();
             world.killEntity(lifeID);
             world.removeComponentFromEntity(entity, CmpId.COLLISION.ordinal());
             world.removeComponentFromEntity(entity, CmpId.COLLISION_RESPONSE.ordinal());
-//            java.lang.System.out.println("Tracisz życie!");
         }
     }
 }

@@ -5,15 +5,15 @@ import snowbober.Components.*;
 import snowbober.ECS.Component;
 import snowbober.ECS.System;
 import snowbober.ECS.World;
-import snowbober.Util.ConstVals;
+import snowbober.Util.ConstValues;
 
 import java.util.ArrayList;
 
 public class ImmortalSystem implements System {
-
+    final int initialImmortalDurationVal = 150;
     int immortalDuration = 150;
     Texture playerTexture = new Texture("bober-stand.png");
-    Visual playerVisual =  new Visual(playerTexture, ConstVals.BOBER_DEFAULT_WIDTH, ConstVals.BOBER_DEFAULT_HEIGHT);
+    Visual playerVisual =  new Visual(playerTexture, ConstValues.BOBER_DEFAULT_WIDTH, ConstValues.BOBER_DEFAULT_HEIGHT);
 
     @Override
     public void update(long gameFrame, float delta, World world) throws InterruptedException {
@@ -41,8 +41,8 @@ public class ImmortalSystem implements System {
                 }
                 immortalDuration--;
             } else {
-                immortalDuration = 150;
-                world.addComponentToEntity(entity, new Collision(ConstVals.BOBER_DEFAULT_WIDTH, ConstVals.BOBER_DEFAULT_HEIGHT, ObstacleType.PLAYER));
+                immortalDuration = initialImmortalDurationVal;
+                world.addComponentToEntity(entity, new Collision(ConstValues.BOBER_DEFAULT_WIDTH, ConstValues.BOBER_DEFAULT_HEIGHT, ObstacleType.PLAYER));
                 if (vis == null) {
                     world.addComponentToEntity(entity, playerVisual);
                 }

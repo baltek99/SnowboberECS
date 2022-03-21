@@ -1,6 +1,6 @@
 package snowbober.Util;
 
-public class ConstVals {
+public class ConstValues {
     public static final int V_WIDTH = 964;
     public static final int V_HEIGHT = 540;
     public static final int JUMP_FROM_GROUND_Y = 120;

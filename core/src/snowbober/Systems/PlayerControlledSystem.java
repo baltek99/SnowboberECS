@@ -7,7 +7,7 @@ import snowbober.Components.*;
 import snowbober.ECS.Component;
 import snowbober.ECS.System;
 import snowbober.ECS.World;
-import snowbober.Util.ConstVals;
+import snowbober.Util.ConstValues;
 
 import java.util.ArrayList;
 
@@ -35,10 +35,10 @@ public class PlayerControlledSystem implements System {
                 if (pctrl.playerState == PlayerState.SLIDING) {
 //                    java.lang.System.out.println("SKOK Z RAILA!");
                     pctrl.playerState = PlayerState.JUMPING_ON_RAIL;
-                    jump.jumpFrom = ConstVals.JUMP_FROM_RAIL_Y;
+                    jump.jumpFrom = ConstValues.JUMP_FROM_RAIL_Y;
                     jump.startJumpFrame = gameFrame;
                     Texture texture = new Texture("bober-jump.png");
-                    components.get(3)[entity] = new Visual(texture, ConstVals.BOBER_IN_JUMP_WIDTH, ConstVals.BOBER_IN_JUMP_HEIGHT);
+                    components.get(3)[entity] = new Visual(texture, ConstValues.BOBER_IN_JUMP_WIDTH, ConstValues.BOBER_IN_JUMP_HEIGHT);
                 } else if (pctrl.playerState != PlayerState.JUMPING && pctrl.playerState != PlayerState.JUMPING_ON_RAIL
                         && pctrl.playerState != PlayerState.JUMPING_FROM_CROUCH) {
 //                    java.lang.System.out.println("SKOK ZWYKlY");
@@ -47,10 +47,10 @@ public class PlayerControlledSystem implements System {
                     } else {
                         pctrl.playerState = PlayerState.JUMPING;
                     }
-                    jump.jumpFrom = ConstVals.JUMP_FROM_GROUND_Y;
+                    jump.jumpFrom = ConstValues.JUMP_FROM_GROUND_Y;
                     jump.startJumpFrame = gameFrame;
                     Texture texture = new Texture("bober-jump.png");
-                    components.get(3)[entity] = new Visual(texture, ConstVals.BOBER_IN_JUMP_WIDTH, ConstVals.BOBER_IN_JUMP_HEIGHT);
+                    components.get(3)[entity] = new Visual(texture, ConstValues.BOBER_IN_JUMP_WIDTH, ConstValues.BOBER_IN_JUMP_HEIGHT);
                 }
             } else if (Gdx.input.isKeyJustPressed(Input.Keys.CONTROL_LEFT)) {
                 if (pctrl.playerState == PlayerState.IDLE) {
@@ -58,13 +58,13 @@ public class PlayerControlledSystem implements System {
 
                     pos.y = 100;
                     Texture texture = new Texture("bober-jump.png");
-                    components.get(3)[entity] = new Visual(texture, ConstVals.BOBER_IN_JUMP_WIDTH, ConstVals.BOBER_IN_JUMP_HEIGHT);
+                    components.get(3)[entity] = new Visual(texture, ConstValues.BOBER_IN_JUMP_WIDTH, ConstValues.BOBER_IN_JUMP_HEIGHT);
                 } else if (pctrl.playerState == PlayerState.CROUCH) {
                     pctrl.playerState = PlayerState.IDLE;
 
-                    pos.y = ConstVals.IDLE_RIDE_Y;
+                    pos.y = ConstValues.IDLE_RIDE_Y;
                     Texture texture = new Texture("bober-stand.png");
-                    components.get(3)[entity] = new Visual(texture, ConstVals.BOBER_DEFAULT_WIDTH, ConstVals.BOBER_DEFAULT_HEIGHT);
+                    components.get(3)[entity] = new Visual(texture, ConstValues.BOBER_DEFAULT_WIDTH, ConstValues.BOBER_DEFAULT_HEIGHT);
                 }
             }
 

@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import snowbober.Components.*;
 import snowbober.ECS.World;
 import snowbober.ECS.System;
-import snowbober.Util.ConstVals;
+import snowbober.Util.ConstValues;
 
 public class ObstacleGeneratorSystem implements System {
     public int min, max, current, spawnRate;
@@ -56,24 +56,24 @@ public class ObstacleGeneratorSystem implements System {
         world.addComponentToEntity(obstacleIndex, new Collision(168,350, ObstacleType.GRID));
     }
 
-    public void createRail(World world, int  obstacleIndex) {
+    private void createRail(World world, int  obstacleIndex) {
         world.addComponentToEntity(obstacleIndex, new Position(width, 110));
         world.addComponentToEntity(obstacleIndex, new Visual(texRail, 300, 60));
         world.addComponentToEntity(obstacleIndex, new Move(speed));
         world.addComponentToEntity(obstacleIndex, new Collision(260,60, ObstacleType.RAIL));
     }
 
-    public void createBox(World world, int obstacleIndex) {
+    private void createBox(World world, int obstacleIndex) {
         world.addComponentToEntity(obstacleIndex, new Position(width, 100));
         world.addComponentToEntity(obstacleIndex, new Visual(texBox, 70, 70));
         world.addComponentToEntity(obstacleIndex, new Move(speed));
         world.addComponentToEntity(obstacleIndex, new Collision(70,70, ObstacleType.BOX));
     }
 
-    public void createScorePoint(World world, int scorePoint, int positionX) {
+    private void createScorePoint(World world, int scorePoint, int positionX) {
         world.addComponentToEntity(scorePoint, new Position(positionX, 0));
         world.addComponentToEntity(scorePoint, new Move(speed));
-        world.addComponentToEntity(scorePoint, new Collision(1, ConstVals.V_HEIGHT, ObstacleType.SCORE_POINT));
+        world.addComponentToEntity(scorePoint, new Collision(1, ConstValues.V_HEIGHT, ObstacleType.SCORE_POINT));
 //        world.addComponentToEntity(scorePoint, new Visual(texBox, 1, ConstVals.V_HEIGHT));
     }
 }

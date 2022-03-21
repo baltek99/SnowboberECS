@@ -14,16 +14,15 @@ import snowbober.ECS.GameState;
 import snowbober.ECS.World;
 import snowbober.GDX.SnowBoberGame;
 import snowbober.Systems.*;
-import snowbober.Util.ConstVals;
+import snowbober.Util.ConstValues;
 
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
 
 public class GameScreen implements Screen {
 
-    public static final int V_WIDTH = ConstVals.V_WIDTH;
-    public static final int V_HEIGHT = ConstVals.V_HEIGHT;
+    public static final int V_WIDTH = ConstValues.V_WIDTH;
+    public static final int V_HEIGHT = ConstValues.V_HEIGHT;
 
     public World mainMenuECS;
     public World gameplayECS;
@@ -94,7 +93,7 @@ public class GameScreen implements Screen {
         world.addComponentToEntity(life2, new Visual(lifeTexture, 50, 50));
 
         int life3 = 18;
-        world.addComponentToEntity(life3, new Position(V_WIDTH - 110 , 450));
+        world.addComponentToEntity(life3, new Position(V_WIDTH - 110, 450));
         world.addComponentToEntity(life3, new Visual(lifeTexture, 50, 50));
 
         Queue<Integer> lifes = new LinkedList<>();
@@ -104,11 +103,11 @@ public class GameScreen implements Screen {
 
         int player = 15;
         Texture playerTexture = new Texture("bober-stand.png");
-        world.addComponentToEntity(player, new Position(ConstVals.BOBER_DEFAULT_POSITION_X, ConstVals.BOBER_DEFAULT_POSITION_Y));
+        world.addComponentToEntity(player, new Position(ConstValues.BOBER_DEFAULT_POSITION_X, ConstValues.BOBER_DEFAULT_POSITION_Y));
         world.addComponentToEntity(player, new Jump());
         world.addComponentToEntity(player, new PlayerControlled(PlayerState.IDLE));
-        world.addComponentToEntity(player, new Collision(ConstVals.BOBER_DEFAULT_WIDTH, ConstVals.BOBER_DEFAULT_HEIGHT, ObstacleType.PLAYER));
-        world.addComponentToEntity(player, new Visual(playerTexture, ConstVals.BOBER_DEFAULT_WIDTH, ConstVals.BOBER_DEFAULT_HEIGHT));
+        world.addComponentToEntity(player, new Collision(ConstValues.BOBER_DEFAULT_WIDTH, ConstValues.BOBER_DEFAULT_HEIGHT, ObstacleType.PLAYER));
+        world.addComponentToEntity(player, new Visual(playerTexture, ConstValues.BOBER_DEFAULT_WIDTH, ConstValues.BOBER_DEFAULT_HEIGHT));
         world.addComponentToEntity(player, new Score(0));
         world.addComponentToEntity(player, new Lives(lifes));
 

@@ -7,7 +7,6 @@ public class SnowBoberGame extends Game {
 
     private GameScreen gameScreen;
 
-
     public static final int V_WIDTH = 964;
     public static final int V_HEIGHT = 540;
 
@@ -24,12 +23,11 @@ public class SnowBoberGame extends Game {
 
     @Override
     public void dispose() {
-//        super.dispose();
         gameScreen.dispose();
     }
 
     @Override
     public void resize(int width, int height) {
-        super.resize(width, height);
+        gameScreen.resize(width, height);
     }
 }
