@@ -31,7 +31,7 @@ public class JumpSystem implements System {
         }
 
         for (int entity = 0; entity < world.MAX_ENTITIES; entity++) {
-            if (World.isEntityOk(entity, components) == false) continue;
+            if (!World.isEntityOk(entity, components)) continue;
 
             Position pos = (Position) components.get(0)[entity];
             PlayerControlled pctrl = (PlayerControlled) components.get(1)[entity];
@@ -58,10 +58,10 @@ public class JumpSystem implements System {
 
 //                    java.lang.System.out.println((gameFrame - jump.startJumpFrame) / duration);
                     if (pctrl.playerState == PlayerState.JUMPING_ON_RAIL) {
-                        vis.rotation += rotationSpeed;
+                        vis.rotation -= rotationSpeed;
 //                        vis.rotation += 3.4f;
                     } else if (pctrl.playerState == PlayerState.JUMPING_FROM_CROUCH) {
-                        vis.rotation -= rotationSpeed;
+                        vis.rotation += rotationSpeed;
 //                        vis.rotation -= 3.4f;
                     } else {
                         if ((gameFrame - jump.startJumpFrame) / duration < 0.15f)

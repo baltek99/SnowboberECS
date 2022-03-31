@@ -9,7 +9,7 @@ import snowbober.ECS.System;
 import java.util.ArrayList;
 
 public class BackgroundGeneratorSystem implements System {
-    public int width, height;
+    public final int width, height;
 
     public BackgroundGeneratorSystem(int width, int height) {
         this.width = width;

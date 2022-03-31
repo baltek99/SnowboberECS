@@ -46,15 +46,19 @@ public class PlayerCollisionSystem implements System {
                 world.removeComponentFromEntity(entity, cr);
             } else if (cr.obstacle == ObstacleType.BOX || (cr.obstacle == ObstacleType.RAIL && pc.playerState == PlayerState.IDLE)) {
                 removeLifeOrKill(world, entity, liv);
+                pos.y = ConstValues.BOBER_DEFAULT_POSITION_Y;
+                pc.playerState = PlayerState.IDLE;
             } else if (cr.obstacle == ObstacleType.RAIL && (pc.playerState == PlayerState.JUMPING || pc.playerState == PlayerState.JUMPING_FROM_CROUCH)) {
                 pos.y = ConstValues.SLIDING_ON_RAIL_Y;
                 pc.playerState = PlayerState.SLIDING;
                 Texture texture = new Texture("bober-rail.png");
                 components.get(3)[entity] = new Visual(texture, ConstValues.BOBER_ON_RAIL_WIDTH, ConstValues.BOBER_ON_RAIL_HEIGHT);
                 world.removeComponentFromEntity(entity, cr);
-            } else if (cr.obstacle == ObstacleType.GRID && pc.playerState != PlayerState.CROUCH) {
-                if (cr.type == CollisionType.INTERSECT) {
+            } else if (cr.obstacle == ObstacleType.GRID) {
+                if (pc.playerState != PlayerState.CROUCH) {
                     removeLifeOrKill(world, entity, liv);
+                    pos.y = ConstValues.BOBER_DEFAULT_POSITION_Y;
+                    pc.playerState = PlayerState.IDLE;
                 } else {
                     world.removeComponentFromEntity(entity, cr);
                 }
@@ -71,6 +75,8 @@ public class PlayerCollisionSystem implements System {
             world.killEntity(lifeID);
             world.removeComponentFromEntity(entity, CmpId.COLLISION.ordinal());
             world.removeComponentFromEntity(entity, CmpId.COLLISION_RESPONSE.ordinal());
+            Texture texture = new Texture("bober-stand.png");
+            world.addComponentToEntity(entity, new Visual(texture, ConstValues.BOBER_DEFAULT_WIDTH, ConstValues.BOBER_DEFAULT_HEIGHT));
         }
     }
 }

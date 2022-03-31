@@ -53,7 +53,7 @@ public class GameScreen implements Screen {
 
         world.addSystem(new MoveSystem());
         world.addSystem(new BackgroundGeneratorSystem(V_WIDTH, V_HEIGHT));
-        world.addSystem(new ObstacleGeneratorSystem(5, 8, V_WIDTH, V_HEIGHT));
+        world.addSystem(new ObstacleGeneratorSystem(3, 12, 7, 4));
         world.addSystem(new PlayerControlledSystem());
         world.addSystem(new CollisionSystem(batch));
         world.addSystem(new PlayerCollisionSystem());
@@ -66,6 +66,8 @@ public class GameScreen implements Screen {
 
         world.addRenderSystem(new RenderSystem(batch));
         world.addRenderSystem(new ScoreRenderSystem(batch));
+
+        // 0-1 - backgrounds / 2 - scoreLabel / 3-6 - obstacles / 7-10 - score / 11 - player / 12-15 - grid / 16-18 - lives /
 
         int background1 = 0;
         Texture backgroundTexture = new Texture("background.jpg");
@@ -81,10 +83,10 @@ public class GameScreen implements Screen {
 
         int scoreLabel = 2;
         world.addComponentToEntity(scoreLabel, new Position(V_WIDTH - 200, 50));
-        world.addComponentToEntity(scoreLabel, new ScoreBind(15));
+        world.addComponentToEntity(scoreLabel, new ScoreBind(11));
 
         int life1 = 16;
-        Texture lifeTexture = new Texture("bober-stand.png");
+        Texture lifeTexture = new Texture("heart.png");
         world.addComponentToEntity(life1, new Position(V_WIDTH - 250, 450));
         world.addComponentToEntity(life1, new Visual(lifeTexture, 50, 50));
 
@@ -96,12 +98,12 @@ public class GameScreen implements Screen {
         world.addComponentToEntity(life3, new Position(V_WIDTH - 110, 450));
         world.addComponentToEntity(life3, new Visual(lifeTexture, 50, 50));
 
-        Queue<Integer> lifes = new LinkedList<>();
-        lifes.add(16);
-        lifes.add(17);
-        lifes.add(18);
+        Queue<Integer> lives = new LinkedList<>();
+        lives.add(16);
+        lives.add(17);
+        lives.add(18);
 
-        int player = 15;
+        int player = 11;
         Texture playerTexture = new Texture("bober-stand.png");
         world.addComponentToEntity(player, new Position(ConstValues.BOBER_DEFAULT_POSITION_X, ConstValues.BOBER_DEFAULT_POSITION_Y));
         world.addComponentToEntity(player, new Jump());
@@ -109,7 +111,7 @@ public class GameScreen implements Screen {
         world.addComponentToEntity(player, new Collision(ConstValues.BOBER_DEFAULT_WIDTH, ConstValues.BOBER_DEFAULT_HEIGHT, ObstacleType.PLAYER));
         world.addComponentToEntity(player, new Visual(playerTexture, ConstValues.BOBER_DEFAULT_WIDTH, ConstValues.BOBER_DEFAULT_HEIGHT));
         world.addComponentToEntity(player, new Score(0));
-        world.addComponentToEntity(player, new Lives(lifes));
+        world.addComponentToEntity(player, new Lives(lives));
 
         return world;
     }
@@ -132,7 +134,7 @@ public class GameScreen implements Screen {
         world.addRenderSystem(new RenderSystem(batch));
 
         int background = 0;
-        world.addComponentToEntity(background, new Visual(new Texture("game-over.jpg"), SnowBoberGame.V_WIDTH, SnowBoberGame.V_HEIGHT));
+        world.addComponentToEntity(background, new Visual(new Texture("start.jpg"), SnowBoberGame.V_WIDTH, SnowBoberGame.V_HEIGHT));
         world.addComponentToEntity(background, new Position(0, 0));
 
         return world;

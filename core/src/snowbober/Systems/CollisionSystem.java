@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class CollisionSystem implements System {
 
-    SpriteBatch batch;
+    private final SpriteBatch batch;
 
     public CollisionSystem(SpriteBatch batch) {
         this.batch = batch;

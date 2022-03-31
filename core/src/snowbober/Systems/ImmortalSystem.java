@@ -40,7 +40,7 @@ public class ImmortalSystem implements System {
                     }
                 }
                 immortalDuration--;
-            } else {
+            } else if (col == null) {
                 immortalDuration = initialImmortalDurationVal;
                 world.addComponentToEntity(entity, new Collision(ConstValues.BOBER_DEFAULT_WIDTH, ConstValues.BOBER_DEFAULT_HEIGHT, ObstacleType.PLAYER));
                 if (vis == null) {

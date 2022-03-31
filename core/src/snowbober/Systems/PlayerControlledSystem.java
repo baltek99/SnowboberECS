@@ -37,28 +37,31 @@ public class PlayerControlledSystem implements System {
                     pctrl.playerState = PlayerState.JUMPING_ON_RAIL;
                     jump.jumpFrom = ConstValues.JUMP_FROM_RAIL_Y;
                     jump.startJumpFrame = gameFrame;
-                    Texture texture = new Texture("bober-jump.png");
+                    Texture texture = new Texture("bober-flip.png");
                     components.get(3)[entity] = new Visual(texture, ConstValues.BOBER_IN_JUMP_WIDTH, ConstValues.BOBER_IN_JUMP_HEIGHT);
                 } else if (pctrl.playerState != PlayerState.JUMPING && pctrl.playerState != PlayerState.JUMPING_ON_RAIL
                         && pctrl.playerState != PlayerState.JUMPING_FROM_CROUCH) {
 //                    java.lang.System.out.println("SKOK ZWYKlY");
+                    Texture texture;
                     if (pctrl.playerState == PlayerState.CROUCH) {
                         pctrl.playerState = PlayerState.JUMPING_FROM_CROUCH;
+                        texture = new Texture("bober-flip.png");
                     } else {
                         pctrl.playerState = PlayerState.JUMPING;
+                        texture = new Texture("bober-jump.png");
                     }
                     jump.jumpFrom = ConstValues.JUMP_FROM_GROUND_Y;
                     jump.startJumpFrame = gameFrame;
-                    Texture texture = new Texture("bober-jump.png");
+
                     components.get(3)[entity] = new Visual(texture, ConstValues.BOBER_IN_JUMP_WIDTH, ConstValues.BOBER_IN_JUMP_HEIGHT);
                 }
             } else if (Gdx.input.isKeyJustPressed(Input.Keys.CONTROL_LEFT)) {
                 if (pctrl.playerState == PlayerState.IDLE) {
                     pctrl.playerState = PlayerState.CROUCH;
 
-                    pos.y = 100;
-                    Texture texture = new Texture("bober-jump.png");
-                    components.get(3)[entity] = new Visual(texture, ConstValues.BOBER_IN_JUMP_WIDTH, ConstValues.BOBER_IN_JUMP_HEIGHT);
+                    pos.y = ConstValues.BOBER_CROUCH_POSITION_Y;
+                    Texture texture = new Texture("bober-luzny.png");
+                    components.get(3)[entity] = new Visual(texture, ConstValues.BOBER_CROUCH_WIDTH, ConstValues.BOBER_CROUCH_HEIGHT);
                 } else if (pctrl.playerState == PlayerState.CROUCH) {
                     pctrl.playerState = PlayerState.IDLE;
 

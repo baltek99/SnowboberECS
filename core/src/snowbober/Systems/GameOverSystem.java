@@ -11,8 +11,8 @@ import snowbober.GDX.Screens.GameScreen;
 import java.util.ArrayList;
 
 public class GameOverSystem implements System {
-    boolean pcExist;
-    GameScreen gameScreen;
+    private boolean pcExist;
+    private final GameScreen gameScreen;
 
     public GameOverSystem(GameScreen gameScreen) {
         this.gameScreen = gameScreen;

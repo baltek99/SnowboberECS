@@ -2,7 +2,6 @@ package snowbober.Components;
 
 import snowbober.ECS.ComponentWithId;
 
-import java.util.List;
 import java.util.Queue;
 
 public class Lives extends ComponentWithId {
