@@ -31,6 +31,14 @@ public class PlayerControlledSystem implements System {
             Jump jump = ((Jump) components.get(2)[entity]);
             Visual vis = (Visual) components.get(3)[entity];
 
+            if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && pctrl.playerState == PlayerState.IDLE) {
+                pos.x = pos.x + 5;
+                if (pos.x > ConstValues.BOBER_MAX_X) pos.x = ConstValues.BOBER_MAX_X;
+            }
+            else if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && pctrl.playerState == PlayerState.IDLE) {
+                pos.x = pos.x - 5;
+                if (pos.x < ConstValues.BOBER_MIN_X) pos.x = ConstValues.BOBER_MIN_X;
+            }
             if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
                 if (pctrl.playerState == PlayerState.SLIDING) {
 //                    java.lang.System.out.println("SKOK Z RAILA!");
