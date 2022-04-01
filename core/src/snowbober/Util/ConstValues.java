@@ -10,6 +10,7 @@ public class ConstValues {
     public static final int BOBER_DEFAULT_POSITION_X = 100;
     public static final int BOBER_DEFAULT_POSITION_Y = 70;
     public static final int BOBER_CROUCH_POSITION_Y = 105;
+    public static final int RAIL_AND_BOBER_DIFFERENCE = 260;
 
     public static final int NUMBER_OF_FRAMES_TO_INCREMENT = 1000;
 

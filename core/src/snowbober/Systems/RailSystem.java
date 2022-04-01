@@ -26,8 +26,11 @@ public class RailSystem implements System {
             Position pos = (Position) components.get(2)[entity];
             PlayerControlled pc = (PlayerControlled) components.get(0)[entity];
             Visual vis = (Visual) components.get(3)[entity];
-            // todo zmienić drugi warunek na warunek uwzgędlniający pozycję bobera i przeszkody
-            if (pc.playerState == PlayerState.SLIDING && ((Position) components.get(2)[cr.collidingEntityId]).x <= -160) {
+
+            int obstacleX = ((Position) components.get(2)[cr.collidingEntityId]).x;
+            int playerX = pos.x;
+
+            if (pc.playerState == PlayerState.SLIDING && obstacleX < playerX && Math.abs(playerX - obstacleX) >= ConstValues.RAIL_AND_BOBER_DIFFERENCE) {
                 world.removeComponentFromEntity(entity, cr);
                 pc.playerState = PlayerState.IDLE;
                 pos.y = ConstValues.IDLE_RIDE_Y;
