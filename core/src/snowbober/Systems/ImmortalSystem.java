@@ -1,6 +1,7 @@
 package snowbober.Systems;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import snowbober.Components.*;
 import snowbober.ECS.Component;
 import snowbober.ECS.System;
@@ -10,10 +11,9 @@ import snowbober.Util.ConstValues;
 import java.util.ArrayList;
 
 public class ImmortalSystem implements System {
-    final int initialImmortalDurationVal = 150;
+    int initialImmortalDurationVal = 150;
     int immortalDuration = 150;
-    Texture playerTexture = new Texture("bober-stand.png");
-    Visual playerVisual =  new Visual(playerTexture, ConstValues.BOBER_DEFAULT_WIDTH, ConstValues.BOBER_DEFAULT_HEIGHT);
+    TextureRegion playerTexture = new TextureRegion(new Texture("bober-stand.png"));
 
     @Override
     public void update(long gameFrame, float delta, World world) throws InterruptedException {
@@ -31,20 +31,28 @@ public class ImmortalSystem implements System {
             Visual vis = (Visual) components.get(1)[entity];
             Collision col = (Collision) components.get(2)[entity];
 
+            if (gameFrame == ConstValues.NUMBER_OF_FRAMES_TO_INCREMENT) {
+                if (immortalDuration == initialImmortalDurationVal) {
+                    immortalDuration = 100;
+                }
+                initialImmortalDurationVal = 100;
+            }
+
             if (col == null && immortalDuration > 0) {
                 if (immortalDuration % 20 == 0) {
-                    if (vis == null) {
-                        world.addComponentToEntity(entity, playerVisual);
+                    if (vis.texture == null) {
+                        vis.texture = new TextureRegion(playerTexture);
                     } else {
-                        world.removeComponentFromEntity(entity, CmpId.VISUAL.ordinal());
+                        playerTexture = vis.texture;
+                        vis.texture = null;
                     }
                 }
                 immortalDuration--;
             } else if (col == null) {
                 immortalDuration = initialImmortalDurationVal;
                 world.addComponentToEntity(entity, new Collision(ConstValues.BOBER_DEFAULT_WIDTH, ConstValues.BOBER_DEFAULT_HEIGHT, ObstacleType.PLAYER));
-                if (vis == null) {
-                    world.addComponentToEntity(entity, playerVisual);
+                if (vis.texture == null) {
+                    vis.texture = new TextureRegion(playerTexture);
                 }
             }
         }

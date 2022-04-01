@@ -50,14 +50,15 @@ public class GameScreen implements Screen {
 
     public World createGameWorld() {
         World world = new World();
+        frame = 0;
 
         world.addSystem(new MoveSystem());
         world.addSystem(new BackgroundGeneratorSystem(V_WIDTH, V_HEIGHT));
         world.addSystem(new ObstacleGeneratorSystem(3, 12, 7, 4));
         world.addSystem(new PlayerControlledSystem());
+        world.addSystem(new JumpOnRailSystem());
         world.addSystem(new CollisionSystem(batch));
         world.addSystem(new PlayerCollisionSystem());
-        world.addSystem(new JumpOnRailSystem());
         world.addSystem(new JumpSystem());
         world.addSystem(new RailSystem());
         world.addSystem(new SpeedSystem());

@@ -63,6 +63,8 @@ public class CollisionSystem implements System {
         }
         if (colA.rectangle.overlaps(colB.rectangle)) {
 //            java.lang.System.out.println("KOLIZYJAAAAAAAAAAAAAAAAAAAAAA");
+//            java.lang.System.out.println(colA.type + " z " + colB.type);
+
             return CollisionType.INTERSECT;
         }
 

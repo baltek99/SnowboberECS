@@ -11,14 +11,6 @@ import java.util.ArrayList;
 
 public class PlayerCollisionSystem implements System {
 
-    //todo problem do rozwiązania
-//
-//    przeszkody poruszają się z daną prędkością (domyślnie 3), bober stoi w danym miejscu
-//    jeśli szerokość obiektu kolizji nie dzieli się przez 3 to bober nigdy nie będzie miał kolizji
-//    typu TOUCH pod koniec pokonywania przeszkody.
-//    Jeśli przeszkody będą przyśpieszać (a będą) to może być problem z określeniem typu kolizji
-//
-
     @Override
     public void update(long gameFrame, float delta, World world) {
         ArrayList<Component[]> components = world.getEntitiesWithComponents(new int[]{
@@ -44,11 +36,14 @@ public class PlayerCollisionSystem implements System {
                 score.score++;
                 world.killEntity(cr.collidingEntityId);
                 world.removeComponentFromEntity(entity, cr);
+//                java.lang.System.out.println("Punkt!");
             } else if (cr.obstacle == ObstacleType.BOX || (cr.obstacle == ObstacleType.RAIL && pc.playerState == PlayerState.IDLE)) {
                 removeLifeOrKill(world, entity, liv);
                 pos.y = ConstValues.BOBER_DEFAULT_POSITION_Y;
-                pc.playerState = PlayerState.IDLE;
-            } else if (cr.obstacle == ObstacleType.RAIL && (pc.playerState == PlayerState.JUMPING || pc.playerState == PlayerState.JUMPING_FROM_CROUCH)) {
+//                pc.playerState = PlayerState.IMMORTAL;
+            } else if (cr.obstacle == ObstacleType.RAIL && (pc.playerState == PlayerState.JUMPING ||
+                    pc.playerState == PlayerState.JUMPING_FROM_CROUCH || pc.playerState == PlayerState.JUMPING_ON_RAIL)) {
+//                java.lang.System.out.println("Sliding on rail");
                 pos.y = ConstValues.SLIDING_ON_RAIL_Y;
                 pc.playerState = PlayerState.SLIDING;
                 Texture texture = new Texture("bober-rail.png");
@@ -58,7 +53,7 @@ public class PlayerCollisionSystem implements System {
                 if (pc.playerState != PlayerState.CROUCH) {
                     removeLifeOrKill(world, entity, liv);
                     pos.y = ConstValues.BOBER_DEFAULT_POSITION_Y;
-                    pc.playerState = PlayerState.IDLE;
+//                    pc.playerState = PlayerState.IMMORTAL;
                 } else {
                     world.removeComponentFromEntity(entity, cr);
                 }
@@ -75,8 +70,6 @@ public class PlayerCollisionSystem implements System {
             world.killEntity(lifeID);
             world.removeComponentFromEntity(entity, CmpId.COLLISION.ordinal());
             world.removeComponentFromEntity(entity, CmpId.COLLISION_RESPONSE.ordinal());
-            Texture texture = new Texture("bober-stand.png");
-            world.addComponentToEntity(entity, new Visual(texture, ConstValues.BOBER_DEFAULT_WIDTH, ConstValues.BOBER_DEFAULT_HEIGHT));
         }
     }
 }

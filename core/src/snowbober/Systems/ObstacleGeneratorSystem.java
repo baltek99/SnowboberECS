@@ -20,7 +20,9 @@ public class ObstacleGeneratorSystem implements System {
     public int gridMin, gridMax;
     public int scoreMin, scoreMax;
     public int width, height;
-    public int speed;
+    public int initialSpeed;
+    public int speedCount;
+    public int frame;
 
     public ObstacleGeneratorSystem(int obstaclesMinIndex, int gridMinIndex, int scoreMinIndex, int maxNumberOfObstacles) {
         this.maxNumberOfObstacles = maxNumberOfObstacles;
@@ -34,7 +36,8 @@ public class ObstacleGeneratorSystem implements System {
         this.scoreMax = scoreMinIndex + maxNumberOfObstacles - 1;
         current = 0;
         spawnRate = 300;
-        speed = -3;
+        initialSpeed = -3;
+        speedCount = 3;
         texBox = new Texture("box.png");
         texRail = new Texture("rail.png");
         texGrid = new Texture("grid.png");
@@ -43,7 +46,18 @@ public class ObstacleGeneratorSystem implements System {
 
     @Override
     public void update(long gameFrame, float delta, World world) throws InterruptedException {
-        if (gameFrame % spawnRate == 0) {
+        frame++;
+
+        if (frame % ConstValues.NUMBER_OF_FRAMES_TO_INCREMENT == 0) {
+
+            spawnRate = spawnRate - spawnRate / speedCount;
+            speedCount++;
+            frame = 1;
+            java.lang.System.out.println("Spawn rate " + spawnRate + " speed " + speedCount);
+        }
+
+        if (frame % spawnRate == 0) {
+//            java.lang.System.out.println("Przeszkoda spawn rate " + spawnRate + " gameFrame " + frame);
             current++;
             if (current >= maxNumberOfObstacles) current = 0;
 
@@ -66,36 +80,37 @@ public class ObstacleGeneratorSystem implements System {
 
     private void createGridFlag(World world) {
         createGrid(world, gridMin, texGrid);
+        world.addComponentToEntity(gridMin + current, new Collision(ConstValues.GRID_WIDTH, ConstValues.GRID_HEIGHT, ObstacleType.GRID));
     }
 
     private void createGridStick(World world) {
         createGrid(world, obstacleMin, texGridStick);
+        world.addComponentToEntity(obstacleMin + current, new Collision(0, 0, ObstacleType.GRID));
     }
 
     private void createGrid(World world, int obstacleIndex, Texture texGridStick) {
         world.addComponentToEntity(obstacleIndex + current, new Position(width, 60));
         world.addComponentToEntity(obstacleIndex + current, new Visual(texGridStick, ConstValues.GRID_WIDTH, ConstValues.GRID_HEIGHT));
-        world.addComponentToEntity(obstacleIndex + current, new Move(speed));
-        world.addComponentToEntity(obstacleIndex + current, new Collision(ConstValues.GRID_WIDTH, ConstValues.GRID_HEIGHT, ObstacleType.GRID));
+        world.addComponentToEntity(obstacleIndex + current, new Move(initialSpeed));
     }
 
     private void createRail(World world) {
         world.addComponentToEntity(obstacleMin + current, new Position(width, 110));
         world.addComponentToEntity(obstacleMin + current, new Visual(texRail, ConstValues.RAIL_WIDTH, ConstValues.RAIL_HEIGHT));
-        world.addComponentToEntity(obstacleMin + current, new Move(speed));
+        world.addComponentToEntity(obstacleMin + current, new Move(initialSpeed));
         world.addComponentToEntity(obstacleMin + current, new Collision( ConstValues.RAIL_WIDTH - 40, ConstValues.RAIL_HEIGHT, ObstacleType.RAIL));
     }
 
     private void createBox(World world) {
         world.addComponentToEntity(obstacleMin + current, new Position(width, 100));
         world.addComponentToEntity(obstacleMin + current, new Visual(texBox, ConstValues.BOX_WIDTH, ConstValues.BOX_HEIGHT));
-        world.addComponentToEntity(obstacleMin + current, new Move(speed));
+        world.addComponentToEntity(obstacleMin + current, new Move(initialSpeed));
         world.addComponentToEntity(obstacleMin + current, new Collision(ConstValues.BOX_WIDTH, ConstValues.BOX_HEIGHT, ObstacleType.BOX));
     }
 
     private void createScorePoint(World world, int positionX) {
         world.addComponentToEntity(scoreMin + current, new Position(positionX, 0));
-        world.addComponentToEntity(scoreMin + current, new Move(speed));
+        world.addComponentToEntity(scoreMin + current, new Move(initialSpeed));
         world.addComponentToEntity(scoreMin + current, new Collision(ConstValues.SCORE_WIDTH, ConstValues.SCORE_HEIGHT, ObstacleType.SCORE_POINT));
 //        world.addComponentToEntity(scorePoint, new Visual(texBox, 1, ConstVals.V_HEIGHT));
     }

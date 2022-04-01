@@ -5,6 +5,7 @@ import snowbober.Components.*;
 import snowbober.ECS.Component;
 import snowbober.ECS.System;
 import snowbober.ECS.World;
+import snowbober.Util.ConstValues;
 import snowbober.Util.Util;
 
 import java.util.ArrayList;
@@ -31,7 +32,13 @@ public class JumpOnRailSystem  implements System {
             CollisionResponse cr = (CollisionResponse) components.get(4)[entity];
 
             if (pctrl.playerState == PlayerState.JUMPING_ON_RAIL) {
-                world.removeComponentFromEntity(entity, cr);
+//                world.removeComponentFromEntity(entity, cr);
+//                Collision obstacleCol = (Collision) world.getComponent(cr.collidingEntityId, CmpId.COLLISION.ordinal());
+//                obstacleCol.height = 0;
+                world.removeComponentFromEntity(cr.collidingEntityId, CmpId.COLLISION.ordinal());
+                world.removeComponentFromEntity(cr.collidingEntityId, CmpId.COLLISION_RESPONSE.ordinal());
+                world.removeComponentFromEntity(entity, CmpId.COLLISION_RESPONSE.ordinal());
+//                java.lang.System.out.println("Rail niekolizyjny");
             }
         }
     }

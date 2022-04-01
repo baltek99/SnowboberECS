@@ -24,7 +24,7 @@ public class PlayerControlledSystem implements System {
         });
 
         for (int entity = 0; entity < world.MAX_ENTITIES; entity++) {
-            if (World.isEntityOk(entity, components) == false) continue;
+            if (!World.isEntityOk(entity, components)) continue;
 
             Position pos = (Position) components.get(0)[entity];
             PlayerControlled pctrl = (PlayerControlled) components.get(1)[entity];
@@ -39,8 +39,7 @@ public class PlayerControlledSystem implements System {
                     jump.startJumpFrame = gameFrame;
                     Texture texture = new Texture("bober-flip.png");
                     components.get(3)[entity] = new Visual(texture, ConstValues.BOBER_IN_JUMP_WIDTH, ConstValues.BOBER_IN_JUMP_HEIGHT);
-                } else if (pctrl.playerState != PlayerState.JUMPING && pctrl.playerState != PlayerState.JUMPING_ON_RAIL
-                        && pctrl.playerState != PlayerState.JUMPING_FROM_CROUCH) {
+                } else if (pctrl.playerState == PlayerState.IDLE || pctrl.playerState == PlayerState.CROUCH) {
 //                    java.lang.System.out.println("SKOK ZWYKlY");
                     Texture texture;
                     if (pctrl.playerState == PlayerState.CROUCH) {

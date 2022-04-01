@@ -37,10 +37,10 @@ public class RenderSystem implements System {
             if (pos == null || vis == null) continue;
 
             batch.begin();
-//            java.lang.System.out.println("delta " + delta);
-
-            batch.draw(vis.texture, pos.x, pos.y, vis.imgWidth/2f, vis.imgHeight/2f,
-                    vis.imgWidth, vis.imgHeight, 1, 1, vis.rotation);
+            if (vis.texture != null) {
+                batch.draw(vis.texture, pos.x, pos.y, vis.imgWidth/2f, vis.imgHeight/2f,
+                        vis.imgWidth, vis.imgHeight, 1, 1, vis.rotation);
+            }
             batch.end();
         }
     }

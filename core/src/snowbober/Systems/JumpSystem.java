@@ -11,9 +11,9 @@ import snowbober.Util.Util;
 import java.util.ArrayList;
 
 public class JumpSystem implements System {
-    static int jumpHeight = 120;
-    static float duration = 110;
-    static float rotationSpeed = 3.4f;
+    private int jumpHeight = 120;
+    private float duration = 110;
+    private float rotationSpeed = 3.4f;
 
     @Override
     public void update(long gameFrame, float delta, World world) {
@@ -28,6 +28,10 @@ public class JumpSystem implements System {
             jumpHeight = 110;
             duration = 80;
             rotationSpeed = 4.5f;
+        } else if (gameFrame == 3 * ConstValues.NUMBER_OF_FRAMES_TO_INCREMENT) {
+            jumpHeight = 110;
+            duration = 65;
+            rotationSpeed = 5.5f;
         }
 
         for (int entity = 0; entity < world.MAX_ENTITIES; entity++) {
@@ -38,9 +42,11 @@ public class JumpSystem implements System {
             Jump jump = ((Jump) components.get(2)[entity]);
             Visual vis = (Visual) components.get(3)[entity];
 
+//            java.lang.System.out.println("Stan " + pctrl.playerState);
             if (pctrl.playerState == PlayerState.JUMPING || pctrl.playerState == PlayerState.JUMPING_ON_RAIL
                     || pctrl.playerState == PlayerState.JUMPING_FROM_CROUCH) {
-                if (gameFrame == jump.startJumpFrame + duration) {
+
+                if (gameFrame >= jump.startJumpFrame + duration) {
                     pctrl.playerState = PlayerState.IDLE;
                     pos.y = ConstValues.IDLE_RIDE_Y;
                     vis.rotation = 0;
@@ -49,7 +55,7 @@ public class JumpSystem implements System {
                 } else {
 //                    if ((gameFrame - jump.startJumpFrame) / duration < 0.1)
 //                        pos.y = ConstVals.JUMP_FROM_GROUND_Y;
-
+//                    java.lang.System.out.println("JUMPING!");
                     pos.y = (int) Util.lerp(
                             jump.jumpFrom,
                             jump.jumpFrom + jumpHeight,
@@ -59,10 +65,8 @@ public class JumpSystem implements System {
 //                    java.lang.System.out.println((gameFrame - jump.startJumpFrame) / duration);
                     if (pctrl.playerState == PlayerState.JUMPING_ON_RAIL) {
                         vis.rotation -= rotationSpeed;
-//                        vis.rotation += 3.4f;
                     } else if (pctrl.playerState == PlayerState.JUMPING_FROM_CROUCH) {
                         vis.rotation += rotationSpeed;
-//                        vis.rotation -= 3.4f;
                     } else {
                         if ((gameFrame - jump.startJumpFrame) / duration < 0.15f)
                             vis.rotation += 1.3f;
