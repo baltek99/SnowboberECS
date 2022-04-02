@@ -34,8 +34,7 @@ public class PlayerControlledSystem implements System {
             if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && pctrl.playerState == PlayerState.IDLE) {
                 pos.x = pos.x + 5;
                 if (pos.x > ConstValues.BOBER_MAX_X) pos.x = ConstValues.BOBER_MAX_X;
-            }
-            else if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && pctrl.playerState == PlayerState.IDLE) {
+            } else if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && pctrl.playerState == PlayerState.IDLE) {
                 pos.x = pos.x - 5;
                 if (pos.x < ConstValues.BOBER_MIN_X) pos.x = ConstValues.BOBER_MIN_X;
             }

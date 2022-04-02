@@ -49,11 +49,10 @@ public class ObstacleGeneratorSystem implements System {
         frame++;
 
         if (frame % ConstValues.NUMBER_OF_FRAMES_TO_INCREMENT == 0) {
-
             spawnRate = spawnRate - spawnRate / speedCount;
             speedCount++;
             frame = 1;
-            java.lang.System.out.println("Spawn rate " + spawnRate + " speed " + speedCount);
+//            java.lang.System.out.println("Spawn rate " + spawnRate + " speed " + speedCount);
         }
 
         if (frame % spawnRate == 0) {

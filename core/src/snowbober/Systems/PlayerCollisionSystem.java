@@ -36,7 +36,7 @@ public class PlayerCollisionSystem implements System {
                 score.score++;
                 world.killEntity(cr.collidingEntityId);
                 world.removeComponentFromEntity(entity, cr);
-//                java.lang.System.out.println("Punkt!");
+                java.lang.System.out.println("Score " + score.score);
             } else if (cr.obstacle == ObstacleType.BOX || (cr.obstacle == ObstacleType.RAIL && pc.playerState == PlayerState.IDLE)) {
                 removeLifeOrKill(world, entity, liv);
                 pos.y = ConstValues.BOBER_DEFAULT_POSITION_Y;

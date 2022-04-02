@@ -7,6 +7,9 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import snowbober.Components.*;
@@ -31,6 +34,8 @@ public class GameScreen implements Screen {
     private final Camera camera;
     private final Viewport viewport;
     private final SpriteBatch batch;
+//    private final Stage stage;
+//    private TextField textField;
 
     public GameState state;
     public long frame;
@@ -42,13 +47,17 @@ public class GameScreen implements Screen {
         viewport = new FitViewport(SnowBoberGame.V_WIDTH, SnowBoberGame.V_HEIGHT, camera);
         gameOver = false;
         state = GameState.MAIN_MENU;
+//        stage = new Stage();
+//        Gdx.input.setInputProcessor(stage);
+
+
 
         mainMenuECS = createStartWorld();
 //        gameplayECS = createGameWorld();
         gameOverECS = createGameOverWorld();
     }
 
-    public World createGameWorld() {
+    public World createGameWorld(String playerName) {
         World world = new World();
         frame = 0;
 
@@ -108,7 +117,7 @@ public class GameScreen implements Screen {
         Texture playerTexture = new Texture("bober-stand.png");
         world.addComponentToEntity(player, new Position(ConstValues.BOBER_DEFAULT_POSITION_X, ConstValues.BOBER_DEFAULT_POSITION_Y));
         world.addComponentToEntity(player, new Jump());
-        world.addComponentToEntity(player, new PlayerControlled(PlayerState.IDLE));
+        world.addComponentToEntity(player, new PlayerControlled(PlayerState.IDLE, playerName));
         world.addComponentToEntity(player, new Collision(ConstValues.BOBER_DEFAULT_WIDTH, ConstValues.BOBER_DEFAULT_HEIGHT, ObstacleType.PLAYER));
         world.addComponentToEntity(player, new Visual(playerTexture, ConstValues.BOBER_DEFAULT_WIDTH, ConstValues.BOBER_DEFAULT_HEIGHT));
         world.addComponentToEntity(player, new Score(0));
@@ -138,6 +147,13 @@ public class GameScreen implements Screen {
         world.addComponentToEntity(background, new Visual(new Texture("start.jpg"), SnowBoberGame.V_WIDTH, SnowBoberGame.V_HEIGHT));
         world.addComponentToEntity(background, new Position(0, 0));
 
+////        int textInput = 1;
+//        Skin skin = new Skin(Gdx.files.internal("data/uiskin.json"));
+//        textField = new TextField("", skin);
+//        textField.setPosition(200, 150);
+//        textField.setSize(200,50);
+//        stage.addActor(textField);
+
         return world;
     }
 
@@ -152,6 +168,8 @@ public class GameScreen implements Screen {
 // todo dodac delte do move system
         try {
             state = updateState(state, frame, delta);
+//            stage.act(delta);
+//            stage.draw();
             frame++;
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -161,8 +179,10 @@ public class GameScreen implements Screen {
     private GameState updateState(GameState state, long frame, float delta) throws InterruptedException {
         switch (state) {
             case MAIN_MENU:
-                if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-                    gameplayECS = createGameWorld();
+                if (Gdx.input.isKeyJustPressed(Input.Keys.ANY_KEY)) {
+//                    String name = textField.getText();
+//                    stage.dispose();
+                    gameplayECS = createGameWorld("Bartek");
                     gameOver = false;
                     return GameState.GAMEPLAY;
                 }

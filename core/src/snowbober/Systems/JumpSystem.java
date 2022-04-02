@@ -12,8 +12,11 @@ import java.util.ArrayList;
 
 public class JumpSystem implements System {
     private int jumpHeight = 120;
+    //    private float duration = 130;
     private float duration = 110;
     private float rotationSpeed = 3.4f;
+    private int speedCount = 5;
+    private int frame = 0;
 
     @Override
     public void update(long gameFrame, float delta, World world) {
@@ -24,14 +27,33 @@ public class JumpSystem implements System {
                 CmpId.VISUAL.ordinal()
         });
 
+        frame++;
+
+//        if (frame % ConstValues.NUMBER_OF_FRAMES_TO_INCREMENT == 0) {
+////            jumpHeight = 110;
+//            duration = duration - duration / speedCount;
+//            rotationSpeed = rotationSpeed + rotationSpeed / speedCount;
+//            speedCount++;
+//            frame = 1;
+//        }
+
         if (gameFrame == ConstValues.NUMBER_OF_FRAMES_TO_INCREMENT) {
             jumpHeight = 110;
             duration = 80;
             rotationSpeed = 4.5f;
         } else if (gameFrame == 3 * ConstValues.NUMBER_OF_FRAMES_TO_INCREMENT) {
-            jumpHeight = 110;
+//            jumpHeight = 110;
             duration = 65;
             rotationSpeed = 5.5f;
+        } else if (gameFrame == 6 * ConstValues.NUMBER_OF_FRAMES_TO_INCREMENT) {
+//            jumpHeight = 110;
+            duration = 55;
+            rotationSpeed = 6f;
+        } else if (gameFrame == 8 * ConstValues.NUMBER_OF_FRAMES_TO_INCREMENT) {
+//            jumpHeight = 110;
+            duration = duration - duration / speedCount;
+            rotationSpeed = rotationSpeed + rotationSpeed / speedCount;
+            speedCount++;
         }
 
         for (int entity = 0; entity < world.MAX_ENTITIES; entity++) {
