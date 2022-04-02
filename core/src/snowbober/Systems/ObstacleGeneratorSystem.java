@@ -15,6 +15,7 @@ public class ObstacleGeneratorSystem implements System {
     public int spawnRate;
     public Texture texBox;
     public Texture texRail;
+    public Texture texFatPipe;
     public Texture texGrid;
     public Texture texGridStick;
     public int gridMin, gridMax;
@@ -23,6 +24,7 @@ public class ObstacleGeneratorSystem implements System {
     public int initialSpeed;
     public int speedCount;
     public int frame;
+    private final Random random;
 
     public ObstacleGeneratorSystem(int obstaclesMinIndex, int gridMinIndex, int scoreMinIndex, int maxNumberOfObstacles) {
         this.maxNumberOfObstacles = maxNumberOfObstacles;
@@ -34,12 +36,14 @@ public class ObstacleGeneratorSystem implements System {
         this.gridMax = gridMinIndex + maxNumberOfObstacles - 1;
         this.scoreMin = scoreMinIndex;
         this.scoreMax = scoreMinIndex + maxNumberOfObstacles - 1;
+        random = new Random();
         current = 0;
         spawnRate = 300;
         initialSpeed = -3;
         speedCount = 3;
         texBox = new Texture("box.png");
         texRail = new Texture("rail.png");
+        texFatPipe = new Texture("grubas.png");
         texGrid = new Texture("grid.png");
         texGridStick = new Texture("grid-stick.png");
     }
@@ -60,7 +64,6 @@ public class ObstacleGeneratorSystem implements System {
             current++;
             if (current >= maxNumberOfObstacles) current = 0;
 
-            Random random = new Random();
             int x = random.nextInt(1000);
 
             if (x < 333) {
@@ -94,10 +97,11 @@ public class ObstacleGeneratorSystem implements System {
     }
 
     private void createRail(World world) {
+        Texture texture = random.nextInt(100) < 50 ? texRail : texFatPipe;
         world.addComponentToEntity(obstacleMin + current, new Position(width, 110));
-        world.addComponentToEntity(obstacleMin + current, new Visual(texRail, ConstValues.RAIL_WIDTH, ConstValues.RAIL_HEIGHT));
+        world.addComponentToEntity(obstacleMin + current, new Visual(texture, ConstValues.RAIL_WIDTH, ConstValues.RAIL_HEIGHT));
         world.addComponentToEntity(obstacleMin + current, new Move(initialSpeed));
-        world.addComponentToEntity(obstacleMin + current, new Collision( ConstValues.RAIL_WIDTH - 40, ConstValues.RAIL_HEIGHT, ObstacleType.RAIL));
+        world.addComponentToEntity(obstacleMin + current, new Collision( ConstValues.RAIL_WIDTH - 50, ConstValues.RAIL_HEIGHT, ObstacleType.RAIL));
     }
 
     private void createBox(World world) {
@@ -111,6 +115,5 @@ public class ObstacleGeneratorSystem implements System {
         world.addComponentToEntity(scoreMin + current, new Position(positionX, 0));
         world.addComponentToEntity(scoreMin + current, new Move(initialSpeed));
         world.addComponentToEntity(scoreMin + current, new Collision(ConstValues.SCORE_WIDTH, ConstValues.SCORE_HEIGHT, ObstacleType.SCORE_POINT));
-//        world.addComponentToEntity(scorePoint, new Visual(texBox, 1, ConstVals.V_HEIGHT));
     }
 }
