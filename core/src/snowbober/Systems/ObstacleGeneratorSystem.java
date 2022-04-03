@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import snowbober.Components.*;
 import snowbober.ECS.System;
 import snowbober.ECS.World;
+import snowbober.Enums.ObstacleType;
 import snowbober.Util.ConstValues;
 
 import java.util.Random;
@@ -101,7 +102,7 @@ public class ObstacleGeneratorSystem implements System {
         world.addComponentToEntity(obstacleMin + current, new Position(width, 110));
         world.addComponentToEntity(obstacleMin + current, new Visual(texture, ConstValues.RAIL_WIDTH, ConstValues.RAIL_HEIGHT));
         world.addComponentToEntity(obstacleMin + current, new Move(initialSpeed));
-        world.addComponentToEntity(obstacleMin + current, new Collision( ConstValues.RAIL_WIDTH - 50, ConstValues.RAIL_HEIGHT, ObstacleType.RAIL));
+        world.addComponentToEntity(obstacleMin + current, new Collision(ConstValues.RAIL_WIDTH - 50, ConstValues.RAIL_HEIGHT, ObstacleType.RAIL));
     }
 
     private void createBox(World world) {

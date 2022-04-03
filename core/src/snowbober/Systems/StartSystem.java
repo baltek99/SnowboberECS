@@ -6,6 +6,7 @@ import snowbober.Components.*;
 import snowbober.ECS.Component;
 import snowbober.ECS.System;
 import snowbober.ECS.World;
+import snowbober.Enums.CmpId;
 
 import java.util.ArrayList;
 

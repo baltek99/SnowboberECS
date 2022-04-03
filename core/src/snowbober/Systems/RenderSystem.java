@@ -3,7 +3,7 @@ package snowbober.Systems;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import snowbober.Components.CmpId;
+import snowbober.Enums.CmpId;
 import snowbober.Components.Position;
 import snowbober.Components.Visual;
 import snowbober.ECS.Component;

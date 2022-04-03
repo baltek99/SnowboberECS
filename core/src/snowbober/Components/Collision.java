@@ -2,6 +2,8 @@ package snowbober.Components;
 
 import com.badlogic.gdx.math.Rectangle;
 import snowbober.ECS.ComponentWithId;
+import snowbober.Enums.CmpId;
+import snowbober.Enums.ObstacleType;
 
 public class Collision extends ComponentWithId {
     public int width, height;

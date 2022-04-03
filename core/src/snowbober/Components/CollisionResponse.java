@@ -1,6 +1,9 @@
 package snowbober.Components;
 
 import snowbober.ECS.ComponentWithId;
+import snowbober.Enums.CmpId;
+import snowbober.Enums.CollisionType;
+import snowbober.Enums.ObstacleType;
 
 public class CollisionResponse extends ComponentWithId {
     public int collidingEntityId;

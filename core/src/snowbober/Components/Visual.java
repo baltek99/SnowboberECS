@@ -3,6 +3,7 @@ package snowbober.Components;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import snowbober.ECS.ComponentWithId;
+import snowbober.Enums.CmpId;
 //import snowbober.Util.Texture;
 
 public class Visual extends ComponentWithId {

@@ -1,4 +1,4 @@
-package snowbober.Components;
+package snowbober.Enums;
 
 public enum InputActions {
     JUMP

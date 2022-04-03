@@ -1,6 +1,8 @@
 package snowbober.Components;
 
 import snowbober.ECS.ComponentWithId;
+import snowbober.Enums.CmpId;
+import snowbober.Enums.PlayerState;
 
 public class PlayerControlled extends ComponentWithId {
 

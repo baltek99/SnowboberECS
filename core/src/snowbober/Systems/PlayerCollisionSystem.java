@@ -5,6 +5,9 @@ import snowbober.Components.*;
 import snowbober.ECS.Component;
 import snowbober.ECS.System;
 import snowbober.ECS.World;
+import snowbober.Enums.CmpId;
+import snowbober.Enums.ObstacleType;
+import snowbober.Enums.PlayerState;
 import snowbober.Util.ConstValues;
 
 import java.util.ArrayList;
@@ -40,7 +43,6 @@ public class PlayerCollisionSystem implements System {
             } else if (cr.obstacle == ObstacleType.BOX || (cr.obstacle == ObstacleType.RAIL && pc.playerState == PlayerState.IDLE)) {
                 removeLifeOrKill(world, entity, liv);
                 pos.y = ConstValues.BOBER_DEFAULT_POSITION_Y;
-//                pc.playerState = PlayerState.IMMORTAL;
             } else if (cr.obstacle == ObstacleType.RAIL && (pc.playerState == PlayerState.JUMPING ||
                     pc.playerState == PlayerState.JUMPING_FROM_CROUCH || pc.playerState == PlayerState.JUMPING_ON_RAIL)) {
 //                java.lang.System.out.println("Sliding on rail");
@@ -53,7 +55,6 @@ public class PlayerCollisionSystem implements System {
                 if (pc.playerState != PlayerState.CROUCH) {
                     removeLifeOrKill(world, entity, liv);
                     pos.y = ConstValues.BOBER_DEFAULT_POSITION_Y;
-//                    pc.playerState = PlayerState.IMMORTAL;
                 } else {
                     world.removeComponentFromEntity(entity, cr);
                 }

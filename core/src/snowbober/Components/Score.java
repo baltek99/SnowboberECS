@@ -1,6 +1,7 @@
 package snowbober.Components;
 
 import snowbober.ECS.ComponentWithId;
+import snowbober.Enums.CmpId;
 
 public class Score extends ComponentWithId {
 

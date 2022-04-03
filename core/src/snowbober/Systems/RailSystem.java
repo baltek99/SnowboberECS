@@ -5,6 +5,8 @@ import snowbober.Components.*;
 import snowbober.ECS.Component;
 import snowbober.ECS.World;
 import snowbober.ECS.System;
+import snowbober.Enums.CmpId;
+import snowbober.Enums.PlayerState;
 import snowbober.Util.ConstValues;
 
 import java.util.ArrayList;
@@ -30,12 +32,14 @@ public class RailSystem implements System {
             int obstacleX = ((Position) components.get(2)[cr.collidingEntityId]).x;
             int playerX = pos.x;
 
+            java.lang.System.out.println("O : " + obstacleX + " P : " + playerX);
+            java.lang.System.out.println(Math.abs(playerX - obstacleX) + " >= " + ConstValues.RAIL_AND_BOBER_DIFFERENCE);
             if (pc.playerState == PlayerState.SLIDING && obstacleX < playerX && Math.abs(playerX - obstacleX) >= ConstValues.RAIL_AND_BOBER_DIFFERENCE) {
                 world.removeComponentFromEntity(entity, cr);
                 pc.playerState = PlayerState.IDLE;
                 pos.y = ConstValues.IDLE_RIDE_Y;
                 Texture texture = new Texture("bober-stand.png");
-                components.get(3)[entity] = new Visual(texture, 180, 215);
+                components.get(3)[entity] = new Visual(texture, ConstValues.BOBER_DEFAULT_WIDTH, ConstValues.BOBER_DEFAULT_HEIGHT);
             }
 
         }

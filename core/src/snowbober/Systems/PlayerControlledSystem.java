@@ -7,6 +7,8 @@ import snowbober.Components.*;
 import snowbober.ECS.Component;
 import snowbober.ECS.System;
 import snowbober.ECS.World;
+import snowbober.Enums.CmpId;
+import snowbober.Enums.PlayerState;
 import snowbober.Util.ConstValues;
 
 import java.util.ArrayList;

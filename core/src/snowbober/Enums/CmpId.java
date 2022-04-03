@@ -1,4 +1,4 @@
-package snowbober.Components;
+package snowbober.Enums;
 
 public enum CmpId {
     COLLISION, JUMP, MOVE, PLAYER_CONTROLLED, POSITION, VISUAL, COLLISION_RESPONSE, SCORE, SCORE_BIND, LIVES

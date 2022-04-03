@@ -1,6 +1,6 @@
 package snowbober.Systems;
 
-import snowbober.Components.CmpId;
+import snowbober.Enums.CmpId;
 import snowbober.Components.Move;
 import snowbober.Components.Position;
 import snowbober.ECS.Component;

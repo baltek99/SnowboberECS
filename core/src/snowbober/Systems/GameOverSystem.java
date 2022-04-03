@@ -1,9 +1,7 @@
 package snowbober.Systems;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import snowbober.ECS.System;
-import snowbober.Components.CmpId;
+import snowbober.Enums.CmpId;
 import snowbober.ECS.Component;
 import snowbober.ECS.World;
 import snowbober.GDX.Screens.GameScreen;

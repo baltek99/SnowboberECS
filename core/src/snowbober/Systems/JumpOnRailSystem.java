@@ -1,12 +1,11 @@
 package snowbober.Systems;
 
-import com.badlogic.gdx.graphics.Texture;
 import snowbober.Components.*;
 import snowbober.ECS.Component;
 import snowbober.ECS.System;
 import snowbober.ECS.World;
-import snowbober.Util.ConstValues;
-import snowbober.Util.Util;
+import snowbober.Enums.CmpId;
+import snowbober.Enums.PlayerState;
 
 import java.util.ArrayList;
 
