@@ -96,15 +96,15 @@ public class GameScreen implements Screen {
 
         int life1 = 16;
         Texture lifeTexture = new Texture("heart.png");
-        world.addComponentToEntity(life1, new Position(V_WIDTH - 250, 450));
+        world.addComponentToEntity(life1, new Position(ConstValues.HEART_POSITION_X_1, ConstValues.HEART_POSITION_Y));
         world.addComponentToEntity(life1, new Visual(lifeTexture, ConstValues.HEART_WIDTH, ConstValues.HEART_HEIGHT));
 
         int life2 = 17;
-        world.addComponentToEntity(life2, new Position(V_WIDTH - 180, 450));
+        world.addComponentToEntity(life2, new Position(ConstValues.HEART_POSITION_X_2, ConstValues.HEART_POSITION_Y));
         world.addComponentToEntity(life2, new Visual(lifeTexture, ConstValues.HEART_WIDTH, ConstValues.HEART_HEIGHT));
 
         int life3 = 18;
-        world.addComponentToEntity(life3, new Position(V_WIDTH - 110, 450));
+        world.addComponentToEntity(life3, new Position(ConstValues.HEART_POSITION_X_3, ConstValues.HEART_POSITION_Y));
         world.addComponentToEntity(life3, new Visual(lifeTexture, ConstValues.HEART_WIDTH, ConstValues.HEART_HEIGHT));
 
         Queue<Integer> lives = new LinkedList<>();
