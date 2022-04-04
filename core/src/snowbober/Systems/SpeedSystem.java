@@ -28,15 +28,15 @@ public class SpeedSystem implements System {
             obstacleSpeed--;
         }
 
-        for (int entity = 0; entity < World.MAX_ENTITIES; entity++) {
+        for (int entity = 0; entity < world.MAX_ENTITIES; entity++) {
             if (!World.isEntityOk(entity, obstacleComponents)) {
                 if (!World.isEntityOk(entity, backgroundComponents)) continue;
                 if (gameFrame % ConstValues.NUMBER_OF_FRAMES_TO_INCREMENT == 0) {
                     Move mov = (Move) backgroundComponents.get(0)[entity];
                     mov.speed--;
                 }
-//                java.lang.System.out.println("Background " + entity + " move " + ((Move)backgroundComponents.get(0)[entity]).speed);
-                // background
+//         java.lang.System.out.println("Background " + entity + " move " + ((Move)backgroundComponents.get(0)[entity]).speed);
+//                /       / background
             } else {
                 // obstacle
                 Move mov = (Move) obstacleComponents.get(0)[entity];

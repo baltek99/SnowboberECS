@@ -42,6 +42,7 @@ public class ObstacleGeneratorSystem implements System {
         spawnRate = 300;
         initialSpeed = -3;
         speedCount = 3;
+        frame = 0;
         texBox = new Texture("box.png");
         texRail = new Texture("rail.png");
         texFatPipe = new Texture("grubas.png");

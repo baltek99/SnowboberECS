@@ -29,7 +29,7 @@ public class RenderSystem implements System {
                 CmpId.POSITION.ordinal(),
                 CmpId.VISUAL.ordinal()});
 
-        for (int entity = 0; entity < World.MAX_ENTITIES; entity++) {
+        for (int entity = 0; entity < world.MAX_ENTITIES; entity++) {
             Position pos = (Position) entities.get(0)[entity];
             Visual vis = (Visual) entities.get(1)[entity];
 

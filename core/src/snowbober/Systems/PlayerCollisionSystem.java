@@ -26,7 +26,7 @@ public class PlayerCollisionSystem implements System {
         });
 
         for (int entity = 0; entity < world.MAX_ENTITIES; entity++) {
-            if (World.isEntityOk(entity, components) == false) continue;
+            if (!World.isEntityOk(entity, components)) continue;
 
             PlayerControlled pc = (PlayerControlled) components.get(0)[entity];
             CollisionResponse cr = (CollisionResponse) components.get(1)[entity];

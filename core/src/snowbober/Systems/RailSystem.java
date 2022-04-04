@@ -22,7 +22,7 @@ public class RailSystem implements System {
         });
 
         for (int entity = 0; entity < world.MAX_ENTITIES; entity++) {
-            if (World.isEntityOk(entity, components) == false) continue;
+            if (!World.isEntityOk(entity, components)) continue;
 
             CollisionResponse cr = (CollisionResponse) components.get(1)[entity];
             Position pos = (Position) components.get(2)[entity];
@@ -32,8 +32,8 @@ public class RailSystem implements System {
             int obstacleX = ((Position) components.get(2)[cr.collidingEntityId]).x;
             int playerX = pos.x;
 
-            java.lang.System.out.println("O : " + obstacleX + " P : " + playerX);
-            java.lang.System.out.println(Math.abs(playerX - obstacleX) + " >= " + ConstValues.RAIL_AND_BOBER_DIFFERENCE);
+//            java.lang.System.out.println("O : " + obstacleX + " P : " + playerX);
+//            java.lang.System.out.println(Math.abs(playerX - obstacleX) + " >= " + ConstValues.RAIL_AND_BOBER_DIFFERENCE);
             if (pc.playerState == PlayerState.SLIDING && obstacleX < playerX && Math.abs(playerX - obstacleX) >= ConstValues.RAIL_AND_BOBER_DIFFERENCE) {
                 world.removeComponentFromEntity(entity, cr);
                 pc.playerState = PlayerState.IDLE;

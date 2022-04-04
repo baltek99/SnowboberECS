@@ -25,7 +25,7 @@ public class BackgroundGeneratorSystem implements System {
         });
 
         for (int entity = 0; entity < 2; entity++) {
-            if (World.isEntityOk(entity, components) == false) continue;
+            if (!World.isEntityOk(entity, components)) continue;
 
             Position pos = (Position) components.get(0)[entity];
 

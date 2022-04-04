@@ -43,7 +43,7 @@ public class GameScreen implements Screen {
     public GameScreen() {
         this.batch = new SpriteBatch();
         camera = new OrthographicCamera();
-        viewport = new FitViewport(SnowBoberGame.V_WIDTH, SnowBoberGame.V_HEIGHT, camera);
+        viewport = new FitViewport(V_WIDTH, V_HEIGHT, camera);
         gameOver = false;
         state = GameState.MAIN_MENU;
 //        stage = new Stage();
@@ -91,7 +91,7 @@ public class GameScreen implements Screen {
         world.addComponentToEntity(background2, new Move(-2));
 
         int scoreLabel = 2;
-        world.addComponentToEntity(scoreLabel, new Position(V_WIDTH - 200, 50));
+        world.addComponentToEntity(scoreLabel, new Position(ConstValues.SCORE_POSITION_X, ConstValues.SCORE_POSITION_Y));
         world.addComponentToEntity(scoreLabel, new ScoreBind(11));
 
         int life1 = 16;
@@ -131,7 +131,7 @@ public class GameScreen implements Screen {
         world.addRenderSystem(new RenderSystem(batch));
 
         int background = 0;
-        world.addComponentToEntity(background, new Visual(new Texture("game-over.jpg"), SnowBoberGame.V_WIDTH, SnowBoberGame.V_HEIGHT));
+        world.addComponentToEntity(background, new Visual(new Texture("game-over.jpg"), V_WIDTH, V_HEIGHT));
         world.addComponentToEntity(background, new Position(0, 0));
 
         return world;
@@ -143,7 +143,7 @@ public class GameScreen implements Screen {
         world.addRenderSystem(new RenderSystem(batch));
 
         int background = 0;
-        world.addComponentToEntity(background, new Visual(new Texture("start.jpg"), SnowBoberGame.V_WIDTH, SnowBoberGame.V_HEIGHT));
+        world.addComponentToEntity(background, new Visual(new Texture("start.jpg"), V_WIDTH, V_HEIGHT));
         world.addComponentToEntity(background, new Position(0, 0));
 
 ////        int textInput = 1;
@@ -164,7 +164,6 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
-// todo dodac delte do move system
         try {
             state = updateState(state, frame, delta);
 //            stage.act(delta);

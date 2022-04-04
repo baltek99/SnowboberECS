@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class World {
-    public static final int MAX_ENTITIES = 20;
-    public static final int MAX_COMPONENTS = 10;
+    public final int MAX_ENTITIES = 20;
+    public final int MAX_COMPONENTS = 10;
 
     List<System> systems = new ArrayList<>();
     List<System> renderSystems = new ArrayList<>();

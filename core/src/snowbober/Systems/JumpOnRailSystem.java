@@ -22,7 +22,7 @@ public class JumpOnRailSystem  implements System {
         });
 
         for (int entity = 0; entity < world.MAX_ENTITIES; entity++) {
-            if (World.isEntityOk(entity, components) == false) continue;
+            if (!World.isEntityOk(entity, components)) continue;
 
             Position pos = (Position) components.get(0)[entity];
             PlayerControlled pctrl = (PlayerControlled) components.get(1)[entity];

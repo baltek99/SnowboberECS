@@ -38,7 +38,7 @@ public class ScoreRenderSystem implements System {
                 CmpId.SCORE_BIND.ordinal()
         });
 
-        for (int entity = 0; entity < World.MAX_ENTITIES; entity++) {
+        for (int entity = 0; entity < world.MAX_ENTITIES; entity++) {
             if (!World.isEntityOk(entity, components)) continue;
 
             Position pos = (Position) components.get(0)[entity];

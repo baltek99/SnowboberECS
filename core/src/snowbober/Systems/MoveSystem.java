@@ -17,8 +17,8 @@ public class MoveSystem implements System {
                 CmpId.MOVE.ordinal()
         });
 
-        for (int entity = 0; entity < World.MAX_ENTITIES; entity++) {
-            if (World.isEntityOk(entity, components) == false) continue;
+        for (int entity = 0; entity < world.MAX_ENTITIES; entity++) {
+            if (!World.isEntityOk(entity, components)) continue;
 
             Position pos = (Position) components.get(0)[entity];
             Move mov = (Move) components.get(1)[entity];
