@@ -32,7 +32,7 @@ public class GameScreen implements Screen {
 
     private final Camera camera;
     private final Viewport viewport;
-    private final SpriteBatch batch;
+    private SpriteBatch batch;
 //    private final Stage stage;
 //    private TextField textField;
 
@@ -49,14 +49,16 @@ public class GameScreen implements Screen {
 //        stage = new Stage();
 //        Gdx.input.setInputProcessor(stage);
 
-
-
         mainMenuECS = createStartWorld();
 //        gameplayECS = createGameWorld();
         gameOverECS = createGameOverWorld();
     }
 
     public World createGameWorld(String playerName) {
+        batch.dispose();
+        batch = new SpriteBatch();
+        batch.setProjectionMatrix(camera.combined);
+
         World world = new World();
         frame = 0;
 
