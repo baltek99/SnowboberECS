@@ -70,7 +70,7 @@ public class ObstacleGeneratorSystem implements System {
 
             if (x < 333) {
                 createBox(world);
-                createScorePoint(world, width + 270);
+                createScorePoint(world, width + 500);
             } else if (x < 666) {
                 createGridFlag(world);
                 createGridStick(world);

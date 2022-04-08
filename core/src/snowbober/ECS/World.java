@@ -5,11 +5,22 @@ import java.util.List;
 
 public class World {
     public final int MAX_ENTITIES = 20;
-    public final int MAX_COMPONENTS = 10;
+    public final int MAX_COMPONENTS = 11;
 
     List<System> systems = new ArrayList<>();
     List<System> renderSystems = new ArrayList<>();
     Component[][] components = new Component[MAX_COMPONENTS][MAX_ENTITIES];
+//
+//    Collision[] collisionsComps = new Collision[MAX_ENTITIES];
+//    CollisionResponse[] collisionResponseComps = new CollisionResponse[MAX_ENTITIES];
+//    Jump[] jumpComps = new Jump[MAX_ENTITIES];
+//    Lives[] livesComps = new Lives[MAX_ENTITIES];
+//    Move[] moveComps = new Move[MAX_ENTITIES];
+//    PlayerControlled[] playerControlledComps = new PlayerControlled[MAX_ENTITIES];
+//    Position[] positionComps = new Position[MAX_ENTITIES];
+//    Score[] scoreComps = new Score[MAX_ENTITIES];
+//    ScoreBind[] scoreBindComps = new ScoreBind[MAX_ENTITIES];
+//    Visual[] visualComps = new Visual[MAX_ENTITIES];
 
 
     // SYSTEM PART
@@ -68,7 +79,7 @@ public class World {
     public void killAllEntities() {
         for (int j = 0; j < MAX_ENTITIES; j++) {
             for (int i = 0; i < MAX_COMPONENTS; i++) {
-                components[i][j] = null;
+//                components[i][j] = null;
             }
         }
     }

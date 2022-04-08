@@ -8,11 +8,18 @@ import snowbober.ECS.World;
 import snowbober.Enums.CmpId;
 import snowbober.Enums.ObstacleType;
 import snowbober.Enums.PlayerState;
+import snowbober.GDX.Screens.GameScreen;
 import snowbober.Util.ConstValues;
 
 import java.util.ArrayList;
 
 public class PlayerCollisionSystem implements System {
+
+    private GameScreen gameScreen;
+
+    public PlayerCollisionSystem(GameScreen gameScreen) {
+        this.gameScreen = gameScreen;
+    }
 
     @Override
     public void update(long gameFrame, float delta, World world) {
@@ -41,7 +48,7 @@ public class PlayerCollisionSystem implements System {
                 world.removeComponentFromEntity(entity, cr);
                 java.lang.System.out.println("Score " + score.score);
             } else if (cr.obstacle == ObstacleType.BOX || (cr.obstacle == ObstacleType.RAIL && pc.playerState == PlayerState.IDLE)) {
-                removeLifeOrKill(world, entity, liv);
+                removeLifeOrKill(world, entity, liv, score.score);
                 pos.y = ConstValues.BOBER_DEFAULT_POSITION_Y;
             } else if (cr.obstacle == ObstacleType.RAIL && (pc.playerState == PlayerState.JUMPING ||
                     pc.playerState == PlayerState.JUMPING_FROM_CROUCH || pc.playerState == PlayerState.JUMPING_ON_RAIL)) {
@@ -53,7 +60,7 @@ public class PlayerCollisionSystem implements System {
                 world.removeComponentFromEntity(entity, cr);
             } else if (cr.obstacle == ObstacleType.GRID) {
                 if (pc.playerState != PlayerState.CROUCH) {
-                    removeLifeOrKill(world, entity, liv);
+                    removeLifeOrKill(world, entity, liv, score.score);
                     pos.y = ConstValues.BOBER_DEFAULT_POSITION_Y;
                 } else {
                     world.removeComponentFromEntity(entity, cr);
@@ -62,8 +69,9 @@ public class PlayerCollisionSystem implements System {
         }
     }
 
-    private void removeLifeOrKill(World world, int entity, Lives liv) {
+    private void removeLifeOrKill(World world, int entity, Lives liv, int score) {
         if (liv.livesIds.size() == 1) {
+            gameScreen.playerResult = score;
             world.killEntity(entity);
             world.killEntity(liv.livesIds.poll());
         } else {

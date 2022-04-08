@@ -10,11 +10,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import snowbober.Components.*;
-import snowbober.Enums.GameState;
 import snowbober.ECS.World;
+import snowbober.Enums.CmpId;
+import snowbober.Enums.GameState;
 import snowbober.Enums.ObstacleType;
 import snowbober.Enums.PlayerState;
-import snowbober.GDX.SnowBoberGame;
 import snowbober.Systems.*;
 import snowbober.Util.ConstValues;
 
@@ -33,12 +33,13 @@ public class GameScreen implements Screen {
     private final Camera camera;
     private final Viewport viewport;
     private SpriteBatch batch;
-//    private final Stage stage;
-//    private TextField textField;
 
     public GameState state;
     public long frame;
     public boolean gameOver;
+    public boolean isNameGiven;
+    public int playerResult;
+    private String playerName;
 
     public GameScreen() {
         this.batch = new SpriteBatch();
@@ -46,12 +47,13 @@ public class GameScreen implements Screen {
         viewport = new FitViewport(V_WIDTH, V_HEIGHT, camera);
         gameOver = false;
         state = GameState.MAIN_MENU;
-//        stage = new Stage();
-//        Gdx.input.setInputProcessor(stage);
+
+        isNameGiven = false;
+        playerName = "player";
 
         mainMenuECS = createStartWorld();
 //        gameplayECS = createGameWorld();
-        gameOverECS = createGameOverWorld();
+//        gameOverECS = createGameOverWorld();
     }
 
     public World createGameWorld(String playerName) {
@@ -68,7 +70,7 @@ public class GameScreen implements Screen {
         world.addSystem(new PlayerControlledSystem());
         world.addSystem(new JumpOnRailSystem());
         world.addSystem(new CollisionSystem(batch));
-        world.addSystem(new PlayerCollisionSystem());
+        world.addSystem(new PlayerCollisionSystem(this));
         world.addSystem(new JumpSystem());
         world.addSystem(new RailSystem());
         world.addSystem(new SpeedSystem());
@@ -128,13 +130,20 @@ public class GameScreen implements Screen {
     }
 
     public World createGameOverWorld() {
+
         World world = new World();
 
         world.addRenderSystem(new RenderSystem(batch));
+        world.addRenderSystem(new ResultRenderSystem(batch));
 
         int background = 0;
         world.addComponentToEntity(background, new Visual(new Texture("game-over.jpg"), V_WIDTH, V_HEIGHT));
         world.addComponentToEntity(background, new Position(0, 0));
+
+        int result = 1;
+        world.addComponentToEntity(result, new TextField(playerName));
+        world.addComponentToEntity(result, new Score(playerResult));
+        world.addComponentToEntity(result, new Position(200, 50));
 
         return world;
     }
@@ -142,18 +151,17 @@ public class GameScreen implements Screen {
     public World createStartWorld() {
         World world = new World();
 
+        world.addSystem(new TextInputSystem(world, this));
         world.addRenderSystem(new RenderSystem(batch));
+//        world.addRenderSystem(new StageRenderSystem(stage));
 
         int background = 0;
         world.addComponentToEntity(background, new Visual(new Texture("start.jpg"), V_WIDTH, V_HEIGHT));
         world.addComponentToEntity(background, new Position(0, 0));
 
-////        int textInput = 1;
-//        Skin skin = new Skin(Gdx.files.internal("data/uiskin.json"));
-//        textField = new TextField("", skin);
-//        textField.setPosition(200, 150);
-//        textField.setSize(200,50);
-//        stage.addActor(textField);
+        int textInput = 1;
+        world.addComponentToEntity(textInput, new TextField());
+//        world.addComponentToEntity(textInput, new Position(200, 100));
 
         return world;
     }
@@ -168,8 +176,6 @@ public class GameScreen implements Screen {
     public void render(float delta) {
         try {
             state = updateState(state, frame, delta);
-//            stage.act(delta);
-//            stage.draw();
             frame++;
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -179,10 +185,12 @@ public class GameScreen implements Screen {
     private GameState updateState(GameState state, long frame, float delta) throws InterruptedException {
         switch (state) {
             case MAIN_MENU:
-                if (Gdx.input.isKeyJustPressed(Input.Keys.ANY_KEY)) {
-//                    String name = textField.getText();
-//                    stage.dispose();
-                    gameplayECS = createGameWorld("Bartek");
+                if (isNameGiven) {
+//                if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+                    isNameGiven = false;
+                    playerName = ((TextField) mainMenuECS.getComponent(1, CmpId.TEXT_FIELD.ordinal())).text;
+                    gameplayECS = createGameWorld(playerName);
+                    java.lang.System.out.println(playerName);
                     gameOver = false;
                     return GameState.GAMEPLAY;
                 }
@@ -194,6 +202,7 @@ public class GameScreen implements Screen {
             case GAMEPLAY:
                 if (gameOver) {
 //                    gameplayECS.resetWorld();
+                    gameOverECS = createGameOverWorld();
                     return GameState.GAME_OVER;
                 }
                 gameplayECS.updateSystems(frame, delta);
