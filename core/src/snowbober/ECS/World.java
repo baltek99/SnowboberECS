@@ -5,7 +5,7 @@ import java.util.List;
 
 public class World {
     public final int MAX_ENTITIES = 20;
-    public final int MAX_COMPONENTS = 11;
+    public final int MAX_COMPONENTS = 12;
 
     List<System> systems = new ArrayList<>();
     List<System> renderSystems = new ArrayList<>();
@@ -79,7 +79,7 @@ public class World {
     public void killAllEntities() {
         for (int j = 0; j < MAX_ENTITIES; j++) {
             for (int i = 0; i < MAX_COMPONENTS; i++) {
-//                components[i][j] = null;
+                components[i][j] = null;
             }
         }
     }

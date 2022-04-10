@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.google.gson.Gson;
 import snowbober.Components.*;
 import snowbober.ECS.World;
 import snowbober.Enums.CmpId;
@@ -17,8 +18,14 @@ import snowbober.Enums.ObstacleType;
 import snowbober.Enums.PlayerState;
 import snowbober.Systems.*;
 import snowbober.Util.ConstValues;
+import snowbober.Util.HighScores;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 
 public class GameScreen implements Screen {
@@ -29,6 +36,7 @@ public class GameScreen implements Screen {
     public World mainMenuECS;
     public World gameplayECS;
     public World gameOverECS;
+    public World highScoresECS;
 
     private final Camera camera;
     private final Viewport viewport;
@@ -41,6 +49,10 @@ public class GameScreen implements Screen {
     public int playerResult;
     private String playerName;
 
+    private HighScores highScores;
+    private String highScoresPath = "highscores.json";
+    private Gson gson;
+
     public GameScreen() {
         this.batch = new SpriteBatch();
         camera = new OrthographicCamera();
@@ -50,6 +62,17 @@ public class GameScreen implements Screen {
 
         isNameGiven = false;
         playerName = "player";
+
+        highScores = new HighScores();
+        gson = new Gson();
+        try {
+            FileReader fileReader = new FileReader(highScoresPath);
+            highScores = gson.fromJson(fileReader, HighScores.class);
+
+        } catch (FileNotFoundException e) {
+            System.out.println("HighScores file not found!");
+            e.printStackTrace();
+        }
 
         mainMenuECS = createStartWorld();
 //        gameplayECS = createGameWorld();
@@ -131,6 +154,18 @@ public class GameScreen implements Screen {
 
     public World createGameOverWorld() {
 
+        highScores.addResult(playerName, playerResult);
+
+        try {
+            FileWriter writer = new FileWriter(highScoresPath);
+            gson.toJson(highScores, writer);
+            writer.flush();
+            writer.close();
+        } catch (IOException e) {
+            System.out.println("HighScores object serialization failed!");
+            e.printStackTrace();
+        }
+
         World world = new World();
 
         world.addRenderSystem(new RenderSystem(batch));
@@ -166,6 +201,25 @@ public class GameScreen implements Screen {
         return world;
     }
 
+    public World createHighScoreWorld() {
+        World world = new World();
+
+        world.addRenderSystem(new RenderSystem(batch));
+        world.addRenderSystem(new HighScoresRenderSystem(batch));
+
+        List<ResultBind> scores = highScores.getScores();
+        if (scores.size() > 0) {
+            int inc = V_HEIGHT / scores.size();
+
+            for (int i = scores.size() - 1; i >= 0; i--) {
+                world.addComponentToEntity(i, scores.get(i));
+                world.addComponentToEntity(i, new Score(scores.size() - i));
+                world.addComponentToEntity(i, new Position(300, (i + 1) * inc - 25));
+            }
+        }
+
+        return world;
+    }
 
     @Override
     public void show() {
@@ -185,8 +239,11 @@ public class GameScreen implements Screen {
     private GameState updateState(GameState state, long frame, float delta) throws InterruptedException {
         switch (state) {
             case MAIN_MENU:
+                if (Gdx.input.isKeyJustPressed(Input.Keys.H)) {
+                    highScoresECS = createHighScoreWorld();
+                    return GameState.HIGH_SCORE;
+                }
                 if (isNameGiven) {
-//                if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
                     isNameGiven = false;
                     playerName = ((TextField) mainMenuECS.getComponent(1, CmpId.TEXT_FIELD.ordinal())).text;
                     gameplayECS = createGameWorld(playerName);
@@ -198,6 +255,7 @@ public class GameScreen implements Screen {
                     mainMenuECS.updateSystems(frame, delta);
                 }
                 mainMenuECS.updateRenderSystems(frame, delta);
+
                 return state;
             case GAMEPLAY:
                 if (gameOver) {
@@ -209,11 +267,24 @@ public class GameScreen implements Screen {
                 gameplayECS.updateRenderSystems(frame, delta);
                 return state;
             case GAME_OVER:
-                if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-                    return GameState.MAIN_MENU;
+                if (Gdx.input.isKeyJustPressed(Input.Keys.H)) {
+                    highScoresECS = createHighScoreWorld();
+                    gameOver = false;
+                    return GameState.HIGH_SCORE;
+                }
+                if (Gdx.input.isKeyJustPressed(Input.Keys.ANY_KEY)) {
+                    gameplayECS = createGameWorld(playerName);
+                    gameOver = false;
+                    return GameState.GAMEPLAY;
                 }
                 gameOverECS.updateSystems(frame, delta);
                 gameOverECS.updateRenderSystems(frame, delta);
+                return state;
+            case HIGH_SCORE:
+                if (Gdx.input.isKeyJustPressed(Input.Keys.ANY_KEY)) {
+                    return GameState.MAIN_MENU;
+                }
+                highScoresECS.updateRenderSystems(frame, delta);
                 return state;
         }
         return null;
