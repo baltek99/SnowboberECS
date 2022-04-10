@@ -25,7 +25,7 @@ public class HighScoresRenderSystem implements System {
 
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("cour.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = 30;
+        parameter.size = 25;
 
         font = generator.generateFont(parameter);
         generator.dispose();

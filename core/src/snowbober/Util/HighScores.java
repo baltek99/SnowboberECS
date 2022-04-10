@@ -26,7 +26,7 @@ public class HighScores implements Serializable {
         Collections.sort(scores);
 
         if (scores.size() > maxNumberOfResults) {
-            scores.remove(scores.size() - 1);
+            scores.remove(0);
         }
     }
 }
