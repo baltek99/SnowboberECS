@@ -10,7 +10,7 @@ public class World {
     List<System> systems = new ArrayList<>();
     List<System> renderSystems = new ArrayList<>();
     Component[][] components = new Component[MAX_COMPONENTS][MAX_ENTITIES];
-//
+
 //    Collision[] collisionsComps = new Collision[MAX_ENTITIES];
 //    CollisionResponse[] collisionResponseComps = new CollisionResponse[MAX_ENTITIES];
 //    Jump[] jumpComps = new Jump[MAX_ENTITIES];
@@ -21,6 +21,8 @@ public class World {
 //    Score[] scoreComps = new Score[MAX_ENTITIES];
 //    ScoreBind[] scoreBindComps = new ScoreBind[MAX_ENTITIES];
 //    Visual[] visualComps = new Visual[MAX_ENTITIES];
+//    ResultBind[] resultBinds = new ResultBind[MAX_ENTITIES];
+//    TextField[] textFields = new TextField[MAX_ENTITIES];
 
 
     // SYSTEM PART
