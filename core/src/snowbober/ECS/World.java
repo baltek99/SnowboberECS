@@ -25,27 +25,6 @@ public class World {
 //    TextField[] textFields = new TextField[MAX_ENTITIES];
 
 
-    // SYSTEM PART
-
-//  Podejście Data Oriented Programming:
-//    componentsA [];
-//    componentsB [];
-//    compoentsC [];
-//
-//    system1, system2;
-//
-//    if system 1:
-//        for ( int i):
-//            componentsA[i];
-//            componentsB[i];
-//   if system 1:
-//        for ( int i):
-//            componentsB[i];
-//            componentsC[i];
-//
-//
-
-
     public void resetWorld() {
         removeAllSystems();
         killAllEntities();

@@ -60,13 +60,9 @@ public class CollisionSystem implements System {
         colB.rectangle.y = posB.y;
 
         if (touch(colA.rectangle, colB.rectangle)) {
-//            java.lang.System.out.println("DOTKNAL MNIE!");
             return CollisionType.TOUCH;
         }
         if (colA.rectangle.overlaps(colB.rectangle)) {
-//            java.lang.System.out.println("KOLIZYJAAAAAAAAAAAAAAAAAAAAAA");
-//            java.lang.System.out.println(colA.type + " z " + colB.type);
-
             return CollisionType.INTERSECT;
         }
 
