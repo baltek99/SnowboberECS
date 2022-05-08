@@ -11,20 +11,6 @@ public class World {
     List<System> renderSystems = new ArrayList<>();
     Component[][] components = new Component[MAX_COMPONENTS][MAX_ENTITIES];
 
-//    Collision[] collisionsComps = new Collision[MAX_ENTITIES];
-//    CollisionResponse[] collisionResponseComps = new CollisionResponse[MAX_ENTITIES];
-//    Jump[] jumpComps = new Jump[MAX_ENTITIES];
-//    Lives[] livesComps = new Lives[MAX_ENTITIES];
-//    Move[] moveComps = new Move[MAX_ENTITIES];
-//    PlayerControlled[] playerControlledComps = new PlayerControlled[MAX_ENTITIES];
-//    Position[] positionComps = new Position[MAX_ENTITIES];
-//    Score[] scoreComps = new Score[MAX_ENTITIES];
-//    ScoreBind[] scoreBindComps = new ScoreBind[MAX_ENTITIES];
-//    Visual[] visualComps = new Visual[MAX_ENTITIES];
-//    ResultBind[] resultBinds = new ResultBind[MAX_ENTITIES];
-//    TextField[] textFields = new TextField[MAX_ENTITIES];
-
-
     public void resetWorld() {
         removeAllSystems();
         killAllEntities();

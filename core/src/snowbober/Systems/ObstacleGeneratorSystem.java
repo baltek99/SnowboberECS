@@ -1,6 +1,7 @@
 package snowbober.Systems;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.sun.org.apache.bcel.internal.Const;
 import snowbober.Components.*;
 import snowbober.ECS.System;
 import snowbober.ECS.World;
@@ -93,21 +94,21 @@ public class ObstacleGeneratorSystem implements System {
     }
 
     private void createGrid(World world, int obstacleIndex, Texture texGridStick) {
-        world.addComponentToEntity(obstacleIndex + current, new Position(width, 60));
+        world.addComponentToEntity(obstacleIndex + current, new Position(width, ConstValues.GRID_POSITION_Y));
         world.addComponentToEntity(obstacleIndex + current, new Visual(texGridStick, ConstValues.GRID_WIDTH, ConstValues.GRID_HEIGHT));
         world.addComponentToEntity(obstacleIndex + current, new Move(initialSpeed));
     }
 
     private void createRail(World world) {
         Texture texture = random.nextInt(100) < 50 ? texRail : texFatPipe;
-        world.addComponentToEntity(obstacleMin + current, new Position(width, 110));
+        world.addComponentToEntity(obstacleMin + current, new Position(width, ConstValues.RAIL_POSITION_Y));
         world.addComponentToEntity(obstacleMin + current, new Visual(texture, ConstValues.RAIL_WIDTH, ConstValues.RAIL_HEIGHT));
         world.addComponentToEntity(obstacleMin + current, new Move(initialSpeed));
         world.addComponentToEntity(obstacleMin + current, new Collision(ConstValues.RAIL_WIDTH - 50, ConstValues.RAIL_HEIGHT, ObstacleType.RAIL));
     }
 
     private void createBox(World world) {
-        world.addComponentToEntity(obstacleMin + current, new Position(width, 100));
+        world.addComponentToEntity(obstacleMin + current, new Position(width, ConstValues.BOX_POSITION_Y));
         world.addComponentToEntity(obstacleMin + current, new Visual(texBox, ConstValues.BOX_WIDTH, ConstValues.BOX_HEIGHT));
         world.addComponentToEntity(obstacleMin + current, new Move(initialSpeed));
         world.addComponentToEntity(obstacleMin + current, new Collision(ConstValues.BOX_WIDTH, ConstValues.BOX_HEIGHT, ObstacleType.BOX));
