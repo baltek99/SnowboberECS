@@ -27,13 +27,10 @@ public class RailSystem implements System {
             CollisionResponse cr = (CollisionResponse) components.get(1)[entity];
             Position pos = (Position) components.get(2)[entity];
             PlayerControlled pc = (PlayerControlled) components.get(0)[entity];
-            Visual vis = (Visual) components.get(3)[entity];
 
             int obstacleX = ((Position) components.get(2)[cr.collidingEntityId]).x;
             int playerX = pos.x;
 
-//            java.lang.System.out.println("O : " + obstacleX + " P : " + playerX);
-//            java.lang.System.out.println(Math.abs(playerX - obstacleX) + " >= " + ConstValues.RAIL_AND_BOBER_DIFFERENCE);
             if (pc.playerState == PlayerState.SLIDING && obstacleX < playerX && Math.abs(playerX - obstacleX) >= ConstValues.RAIL_AND_BOBER_DIFFERENCE) {
                 world.removeComponentFromEntity(entity, cr);
                 pc.playerState = PlayerState.IDLE;

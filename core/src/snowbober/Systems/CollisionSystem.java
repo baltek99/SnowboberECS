@@ -24,8 +24,7 @@ public class CollisionSystem implements System {
 
         ArrayList<Component[]> components = world.getEntitiesWithComponents(new int[]{
                 CmpId.POSITION.ordinal(),
-                CmpId.COLLISION.ordinal(),
-                CmpId.PLAYER_CONTROLLED.ordinal()
+                CmpId.COLLISION.ordinal()
         });
 
         for (int entityA = 0; entityA < world.MAX_ENTITIES; entityA++) {

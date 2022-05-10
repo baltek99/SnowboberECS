@@ -38,7 +38,6 @@ public class PlayerCollisionSystem implements System {
             PlayerControlled pc = (PlayerControlled) components.get(0)[entity];
             CollisionResponse cr = (CollisionResponse) components.get(1)[entity];
             Position pos = (Position) components.get(2)[entity];
-            Visual vis = (Visual) components.get(3)[entity];
             Score score = (Score) components.get(4)[entity];
             Lives liv = (Lives) components.get(5)[entity];
 
