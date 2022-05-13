@@ -264,7 +264,8 @@ public class GameScreen implements Screen {
                 return state;
             case GAMEPLAY:
                 if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-
+                    gameplayMusic.pause();
+                    return GameState.PAUSE;
                 }
                 if (gameOver) {
                     gameOverECS = createGameOverWorld();
@@ -292,6 +293,17 @@ public class GameScreen implements Screen {
                     return GameState.MAIN_MENU;
                 }
                 highScoresECS.updateRenderSystems(frame, delta);
+                return state;
+            case PAUSE:
+                if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
+                    gameplayMusic.play();
+                    return GameState.GAMEPLAY;
+                }
+                if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+                    gameplayMusic.stop();
+                    mainMenuECS = createStartWorld();
+                    return GameState.MAIN_MENU;
+                }
                 return state;
         }
         return null;
