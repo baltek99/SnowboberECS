@@ -45,14 +45,12 @@ public class PlayerCollisionSystem implements System {
                 score.score++;
                 world.killEntity(cr.collidingEntityId);
                 world.removeComponentFromEntity(entity, cr);
-                java.lang.System.out.println("Score " + score.score);
             } else if (cr.obstacle == ObstacleType.BOX || (cr.obstacle == ObstacleType.RAIL &&
                     (pc.playerState == PlayerState.IDLE || pc.playerState == PlayerState.CROUCH))) {
                 removeLifeOrKill(world, entity, liv, score.score);
                 pos.y = ConstValues.BOBER_DEFAULT_POSITION_Y;
             } else if (cr.obstacle == ObstacleType.RAIL && (pc.playerState == PlayerState.JUMPING ||
                     pc.playerState == PlayerState.JUMPING_FROM_CROUCH || pc.playerState == PlayerState.JUMPING_ON_RAIL)) {
-//                java.lang.System.out.println("Sliding on rail");
                 pos.y = ConstValues.SLIDING_ON_RAIL_Y;
                 pc.playerState = PlayerState.SLIDING;
                 Texture texture = new Texture("bober-rail.png");

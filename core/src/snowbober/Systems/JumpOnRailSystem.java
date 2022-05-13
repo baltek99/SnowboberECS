@@ -24,10 +24,7 @@ public class JumpOnRailSystem  implements System {
         for (int entity = 0; entity < world.MAX_ENTITIES; entity++) {
             if (!World.isEntityOk(entity, components)) continue;
 
-            Position pos = (Position) components.get(0)[entity];
             PlayerControlled pctrl = (PlayerControlled) components.get(1)[entity];
-            Jump jump = ((Jump) components.get(2)[entity]);
-            Visual vis = (Visual) components.get(3)[entity];
             CollisionResponse cr = (CollisionResponse) components.get(4)[entity];
 
             if (pctrl.playerState == PlayerState.JUMPING_ON_RAIL) {

@@ -2,12 +2,16 @@ package snowbober.Systems;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
-import snowbober.Components.*;
+import snowbober.Components.Collision;
+import snowbober.Components.CollisionResponse;
+import snowbober.Components.Position;
+import snowbober.Components.Visual;
 import snowbober.ECS.Component;
 import snowbober.ECS.System;
 import snowbober.ECS.World;
 import snowbober.Enums.CmpId;
 import snowbober.Enums.CollisionType;
+import snowbober.Util.RotatedRectangle;
 
 import java.util.ArrayList;
 
@@ -21,25 +25,25 @@ public class CollisionSystem implements System {
 
     @Override
     public void update(long gameFrame, float delta, World world) {
-
         ArrayList<Component[]> components = world.getEntitiesWithComponents(new int[]{
                 CmpId.POSITION.ordinal(),
-                CmpId.COLLISION.ordinal()
+                CmpId.COLLISION.ordinal(),
+                CmpId.VISUAL.ordinal()
         });
 
         for (int entityA = 0; entityA < world.MAX_ENTITIES; entityA++) {
-
             Position posA = (Position) components.get(0)[entityA];
             Collision colA = (Collision) components.get(1)[entityA];
-            if (posA == null || colA == null) continue;
+            Visual visA = (Visual) components.get(2)[entityA];
+            if (posA == null || colA == null || visA == null) continue;
 
             for (int entityB = entityA + 1; entityB < world.MAX_ENTITIES; entityB++) {
-
                 Position posB = (Position) components.get(0)[entityB];
                 Collision colB = (Collision) components.get(1)[entityB];
-                if (posB == null || colB == null) continue;
+                Visual visB = (Visual) components.get(2)[entityB];
+                if (posB == null || colB == null || visB == null) continue;
 
-                CollisionType type = intersects(posA, colA, posB, colB);
+                CollisionType type = intersects(posA, colA, visA, posB, colB, visB);
                 if (type == CollisionType.NONE) {
                     continue;
                 }
@@ -50,7 +54,7 @@ public class CollisionSystem implements System {
         }
     }
 
-    private CollisionType intersects(Position posA, Collision colA, Position posB, Collision colB) {
+    private CollisionType intersects(Position posA, Collision colA, Visual visA, Position posB, Collision colB, Visual visB) {
 
         colA.rectangle.x = posA.x;
         colA.rectangle.y = posA.y;
@@ -58,10 +62,10 @@ public class CollisionSystem implements System {
         colB.rectangle.x = posB.x;
         colB.rectangle.y = posB.y;
 
-        if (touch(colA.rectangle, colB.rectangle)) {
-            return CollisionType.TOUCH;
-        }
-        if (colA.rectangle.overlaps(colB.rectangle)) {
+        RotatedRectangle rectA = new RotatedRectangle(colA.rectangle, visA.rotation);
+        RotatedRectangle rectB = new RotatedRectangle(colB.rectangle, visB.rotation);
+
+        if (rectA.intersects(rectB)) {
             return CollisionType.INTERSECT;
         }
 

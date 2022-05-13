@@ -3,6 +3,7 @@ package snowbober.GDX.Screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -42,6 +43,8 @@ public class GameScreen implements Screen {
     private final Viewport viewport;
     private SpriteBatch batch;
 
+    private Music gameplayMusic;
+
     public GameState state;
     public long frame;
     public boolean gameOver;
@@ -74,15 +77,19 @@ public class GameScreen implements Screen {
             e.printStackTrace();
         }
 
+        gameplayMusic = Gdx.audio.newMusic(Gdx.files.internal("boberMusic.wav"));
+        gameplayMusic.setLooping(true);
+        gameplayMusic.setVolume(0.5f);
+
         mainMenuECS = createStartWorld();
-//        gameplayECS = createGameWorld();
-//        gameOverECS = createGameOverWorld();
     }
 
     public World createGameWorld(String playerName) {
         batch.dispose();
         batch = new SpriteBatch();
         batch.setProjectionMatrix(camera.combined);
+
+        gameplayMusic.play();
 
         World world = new World();
         frame = 0;
@@ -153,7 +160,7 @@ public class GameScreen implements Screen {
     }
 
     public World createGameOverWorld() {
-
+        gameplayMusic.stop();
         highScores.addResult(playerName, playerResult);
 
         try {
@@ -188,7 +195,6 @@ public class GameScreen implements Screen {
 
         world.addSystem(new TextInputSystem(world, this));
         world.addRenderSystem(new RenderSystem(batch));
-//        world.addRenderSystem(new StageRenderSystem(stage));
 
         int background = 0;
         world.addComponentToEntity(background, new Visual(new Texture("start.jpg"), V_WIDTH, V_HEIGHT));
@@ -196,7 +202,6 @@ public class GameScreen implements Screen {
 
         int textInput = 1;
         world.addComponentToEntity(textInput, new TextField());
-//        world.addComponentToEntity(textInput, new Position(200, 100));
 
         return world;
     }
@@ -258,8 +263,10 @@ public class GameScreen implements Screen {
 
                 return state;
             case GAMEPLAY:
+                if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+
+                }
                 if (gameOver) {
-//                    gameplayECS.resetWorld();
                     gameOverECS = createGameOverWorld();
                     return GameState.GAME_OVER;
                 }
@@ -267,7 +274,7 @@ public class GameScreen implements Screen {
                 gameplayECS.updateRenderSystems(frame, delta);
                 return state;
             case GAME_OVER:
-                if (Gdx.input.isKeyJustPressed(Input.Keys.H)) {
+                if (Gdx.input.isKeyJustPressed(Input.Keys.H) || Gdx.input.isKeyJustPressed(Input.Keys.TAB)) {
                     highScoresECS = createHighScoreWorld();
                     gameOver = false;
                     return GameState.HIGH_SCORE;

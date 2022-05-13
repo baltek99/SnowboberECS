@@ -36,7 +36,7 @@ public class RenderSystem implements System {
             if (pos == null || vis == null) continue;
 
             batch.begin();
-            if (vis.texture != null) {
+            if (vis.texture != null && vis.isVisible) {
                 batch.draw(vis.texture, pos.x, pos.y, vis.imgWidth/2f, vis.imgHeight/2f,
                         vis.imgWidth, vis.imgHeight, 1, 1, vis.rotation);
             }

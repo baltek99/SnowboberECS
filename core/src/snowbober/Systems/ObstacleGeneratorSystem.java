@@ -59,11 +59,9 @@ public class ObstacleGeneratorSystem implements System {
             spawnRate = spawnRate - spawnRate / speedCount;
             speedCount++;
             frame = 1;
-//            java.lang.System.out.println("Spawn rate " + spawnRate + " speed " + speedCount);
         }
 
         if (frame % spawnRate == 0) {
-//            java.lang.System.out.println("Przeszkoda spawn rate " + spawnRate + " gameFrame " + frame);
             current++;
             if (current >= maxNumberOfObstacles) current = 0;
 
@@ -118,5 +116,6 @@ public class ObstacleGeneratorSystem implements System {
         world.addComponentToEntity(scoreMin + current, new Position(positionX, 0));
         world.addComponentToEntity(scoreMin + current, new Move(initialSpeed));
         world.addComponentToEntity(scoreMin + current, new Collision(ConstValues.SCORE_WIDTH, ConstValues.SCORE_HEIGHT, ObstacleType.SCORE_POINT));
+        world.addComponentToEntity(scoreMin + current, new Visual(texGridStick, 1, 1, false));
     }
 }

@@ -42,14 +42,12 @@ public class PlayerControlledSystem implements System {
             }
             if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
                 if (pctrl.playerState == PlayerState.SLIDING) {
-//                    java.lang.System.out.println("SKOK Z RAILA!");
                     pctrl.playerState = PlayerState.JUMPING_ON_RAIL;
                     jump.jumpFrom = ConstValues.JUMP_FROM_RAIL_Y;
                     jump.startJumpFrame = gameFrame;
                     Texture texture = new Texture("bober-flip.png");
                     components.get(3)[entity] = new Visual(texture, ConstValues.BOBER_IN_JUMP_WIDTH, ConstValues.BOBER_IN_JUMP_HEIGHT);
                 } else if (pctrl.playerState == PlayerState.IDLE || pctrl.playerState == PlayerState.CROUCH) {
-//                    java.lang.System.out.println("SKOK ZWYKlY");
                     Texture texture;
                     if (pctrl.playerState == PlayerState.CROUCH) {
                         pctrl.playerState = PlayerState.JUMPING_FROM_CROUCH;
