@@ -244,7 +244,7 @@ public class GameScreen implements Screen {
     private GameState updateState(GameState state, long frame, float delta) throws InterruptedException {
         switch (state) {
             case MAIN_MENU:
-                if (Gdx.input.isKeyJustPressed(Input.Keys.H)) {
+                if (Gdx.input.isKeyJustPressed(Input.Keys.H) || Gdx.input.isKeyJustPressed(Input.Keys.TAB)) {
                     highScoresECS = createHighScoreWorld();
                     return GameState.HIGH_SCORE;
                 }

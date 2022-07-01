@@ -88,7 +88,7 @@ public class ObstacleGeneratorSystem implements System {
 
     private void createGridStick(World world) {
         createGrid(world, obstacleMin, texGridStick);
-        world.addComponentToEntity(obstacleMin + current, new Collision(0, 0, ObstacleType.GRID));
+        world.addComponentToEntity(obstacleMin + current, new Collision(ConstValues.GRID_WIDTH, ConstValues.GRID_HEIGHT, ObstacleType.GRID_STICK));
     }
 
     private void createGrid(World world, int obstacleIndex, Texture texGridStick) {
