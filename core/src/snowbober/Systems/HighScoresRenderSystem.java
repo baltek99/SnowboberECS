@@ -30,7 +30,7 @@ public class HighScoresRenderSystem implements System {
         font = generator.generateFont(parameter);
         generator.dispose();
 
-        font.setColor(Color.WHITE);
+        font.setColor(Color.BLACK);
     }
 
     @Override

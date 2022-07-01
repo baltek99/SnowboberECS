@@ -212,14 +212,19 @@ public class GameScreen implements Screen {
         world.addRenderSystem(new RenderSystem(batch));
         world.addRenderSystem(new HighScoresRenderSystem(batch));
 
+        int background = 0;
+        Texture backgroundTexture = new Texture("high-scores.jpg");
+        world.addComponentToEntity(background, new Position(0, 0));
+        world.addComponentToEntity(background, new Visual(backgroundTexture, V_WIDTH, V_HEIGHT));
+
         List<ResultBind> scores = highScores.getScores();
         if (scores.size() > 0) {
             int inc = V_HEIGHT / scores.size();
 
             for (int i = scores.size() - 1; i >= 0; i--) {
-                world.addComponentToEntity(i, scores.get(i));
-                world.addComponentToEntity(i, new Score(scores.size() - i));
-                world.addComponentToEntity(i, new Position(300, (i + 1) * inc - 25));
+                world.addComponentToEntity(i + 1, scores.get(i));
+                world.addComponentToEntity(i + 1, new Score(scores.size() - i));
+                world.addComponentToEntity(i + 1, new Position(300, (i + 1) * inc - 25));
             }
         }
 
