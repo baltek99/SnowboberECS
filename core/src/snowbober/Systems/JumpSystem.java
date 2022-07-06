@@ -1,7 +1,10 @@
 package snowbober.Systems;
 
 import com.badlogic.gdx.graphics.Texture;
-import snowbober.Components.*;
+import snowbober.Components.Jump;
+import snowbober.Components.PlayerControlled;
+import snowbober.Components.Position;
+import snowbober.Components.Visual;
 import snowbober.ECS.Component;
 import snowbober.ECS.System;
 import snowbober.ECS.World;
@@ -14,9 +17,10 @@ import java.util.ArrayList;
 
 public class JumpSystem implements System {
     private int jumpHeight = 120;
-    //    private float duration = 130;
     private float duration = 110;
     private float rotationSpeed = 3.4f;
+    private float ollieUpSpeed = 1.2f;
+    private float ollieDownSpeed = -0.4f;
     private int speedCount = 5;
     private int frame = 0;
 
@@ -28,33 +32,13 @@ public class JumpSystem implements System {
                 CmpId.JUMP.ordinal(),
                 CmpId.VISUAL.ordinal()
         });
-
         frame++;
 
-//        if (frame % ConstValues.NUMBER_OF_FRAMES_TO_INCREMENT == 0) {
-////            jumpHeight = 110;
-//            duration = duration - duration / speedCount;
-//            rotationSpeed = rotationSpeed + rotationSpeed / speedCount;
-//            speedCount++;
-//            frame = 1;
-//        }
-
-        if (gameFrame == ConstValues.NUMBER_OF_FRAMES_TO_INCREMENT) {
-            jumpHeight = 110;
-            duration = 80;
-            rotationSpeed = 4.5f;
-        } else if (gameFrame == 3 * ConstValues.NUMBER_OF_FRAMES_TO_INCREMENT) {
-//            jumpHeight = 110;
-            duration = 65;
-            rotationSpeed = 5.5f;
-        } else if (gameFrame == 6 * ConstValues.NUMBER_OF_FRAMES_TO_INCREMENT) {
-//            jumpHeight = 110;
-            duration = 55;
-            rotationSpeed = 6f;
-        } else if (gameFrame == 8 * ConstValues.NUMBER_OF_FRAMES_TO_INCREMENT) {
-//            jumpHeight = 110;
+        if (frame % ConstValues.NUMBER_OF_FRAMES_TO_INCREMENT == 0) {
             duration = duration - duration / speedCount;
             rotationSpeed = rotationSpeed + rotationSpeed / speedCount;
+            ollieUpSpeed = ollieUpSpeed + ollieUpSpeed / speedCount;
+            ollieDownSpeed = ollieDownSpeed + ollieDownSpeed / speedCount;
             speedCount++;
         }
 
@@ -66,10 +50,8 @@ public class JumpSystem implements System {
             Jump jump = ((Jump) components.get(2)[entity]);
             Visual vis = (Visual) components.get(3)[entity];
 
-//            java.lang.System.out.println("Stan " + pctrl.playerState);
             if (pctrl.playerState == PlayerState.JUMPING || pctrl.playerState == PlayerState.JUMPING_ON_RAIL
                     || pctrl.playerState == PlayerState.JUMPING_FROM_CROUCH) {
-
                 if (gameFrame >= jump.startJumpFrame + duration) {
                     pctrl.playerState = PlayerState.IDLE;
                     pos.y = ConstValues.IDLE_RIDE_Y;
@@ -77,26 +59,22 @@ public class JumpSystem implements System {
                     Texture texture = new Texture("bober-stand.png");
                     components.get(3)[entity] = new Visual(texture, ConstValues.BOBER_DEFAULT_WIDTH, ConstValues.BOBER_DEFAULT_HEIGHT);
                 } else {
-//                    if ((gameFrame - jump.startJumpFrame) / duration < 0.1)
-//                        pos.y = ConstVals.JUMP_FROM_GROUND_Y;
-//                    java.lang.System.out.println("JUMPING!");
                     pos.y = (int) Util.lerp(
                             jump.jumpFrom,
                             jump.jumpFrom + jumpHeight,
                             Util.spike((gameFrame - jump.startJumpFrame) / duration)
                     );
 
-//                    java.lang.System.out.println((gameFrame - jump.startJumpFrame) / duration);
                     if (pctrl.playerState == PlayerState.JUMPING_ON_RAIL) {
                         vis.rotation -= rotationSpeed;
                     } else if (pctrl.playerState == PlayerState.JUMPING_FROM_CROUCH) {
                         vis.rotation += rotationSpeed;
                     } else {
                         if ((gameFrame - jump.startJumpFrame) / duration < 0.15f)
-                            vis.rotation += 1.3f;
+                            vis.rotation += ollieUpSpeed;
 
                         else if (vis.rotation > -10)
-                            vis.rotation -= 0.5;
+                            vis.rotation += ollieDownSpeed;
                     }
                 }
             }

@@ -4,7 +4,6 @@ import snowbober.ECS.ComponentWithId;
 import snowbober.Enums.CmpId;
 
 public class TextField extends ComponentWithId {
-
     public String text;
 
     public TextField() {

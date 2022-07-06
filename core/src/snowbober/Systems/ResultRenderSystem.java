@@ -16,7 +16,6 @@ import snowbober.Enums.CmpId;
 import java.util.ArrayList;
 
 public class ResultRenderSystem implements System {
-
     private final SpriteBatch batch;
     private final BitmapFont font;
 

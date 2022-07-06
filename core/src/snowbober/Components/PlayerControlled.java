@@ -5,7 +5,6 @@ import snowbober.Enums.CmpId;
 import snowbober.Enums.PlayerState;
 
 public class PlayerControlled extends ComponentWithId {
-
     public PlayerState playerState;
     public String name;
 

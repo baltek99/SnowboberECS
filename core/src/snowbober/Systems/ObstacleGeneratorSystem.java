@@ -1,8 +1,10 @@
 package snowbober.Systems;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.sun.org.apache.bcel.internal.Const;
-import snowbober.Components.*;
+import snowbober.Components.Collision;
+import snowbober.Components.Move;
+import snowbober.Components.Position;
+import snowbober.Components.Visual;
 import snowbober.ECS.System;
 import snowbober.ECS.World;
 import snowbober.Enums.ObstacleType;

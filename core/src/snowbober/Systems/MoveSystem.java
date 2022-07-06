@@ -1,11 +1,11 @@
 package snowbober.Systems;
 
-import snowbober.Enums.CmpId;
 import snowbober.Components.Move;
 import snowbober.Components.Position;
 import snowbober.ECS.Component;
-import snowbober.ECS.World;
 import snowbober.ECS.System;
+import snowbober.ECS.World;
+import snowbober.Enums.CmpId;
 
 import java.util.ArrayList;
 

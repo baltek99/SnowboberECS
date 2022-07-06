@@ -2,7 +2,9 @@ package snowbober.Systems;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import snowbober.Components.*;
+import snowbober.Components.Collision;
+import snowbober.Components.PlayerControlled;
+import snowbober.Components.Visual;
 import snowbober.ECS.Component;
 import snowbober.ECS.System;
 import snowbober.ECS.World;
@@ -28,7 +30,7 @@ public class ImmortalSystem implements System {
 
         for (int entity = 0; entity < world.MAX_ENTITIES; entity++) {
             PlayerControlled pc = (PlayerControlled) components.get(0)[entity];
-            if (pc == null) continue;;
+            if (pc == null) continue;
 
             Visual vis = (Visual) components.get(1)[entity];
             Collision col = (Collision) components.get(2)[entity];

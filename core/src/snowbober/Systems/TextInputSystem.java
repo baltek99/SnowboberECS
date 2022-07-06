@@ -12,10 +12,9 @@ import snowbober.GDX.Screens.GameScreen;
 import java.util.ArrayList;
 
 public class TextInputSystem implements System, Input.TextInputListener {
-
+    private final World world;
+    private final GameScreen gameScreen;
     public String text;
-    private World world;
-    private GameScreen gameScreen;
 
     public TextInputSystem(World world, GameScreen gameScreen) {
         this.world = world;
@@ -47,7 +46,6 @@ public class TextInputSystem implements System, Input.TextInputListener {
             input.text = text;
         }
         gameScreen.isNameGiven = true;
-//        java.lang.System.out.println(text);
     }
 
     @Override

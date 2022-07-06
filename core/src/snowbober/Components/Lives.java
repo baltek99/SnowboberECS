@@ -6,7 +6,6 @@ import snowbober.Enums.CmpId;
 import java.util.Queue;
 
 public class Lives extends ComponentWithId {
-
     public int lives;
     public Queue<Integer> livesIds;
 

@@ -43,7 +43,7 @@ public class GameScreen implements Screen {
     private final Viewport viewport;
     private SpriteBatch batch;
 
-    private Music gameplayMusic;
+    private final Music gameplayMusic;
 
     public GameState state;
     public long frame;
@@ -53,8 +53,8 @@ public class GameScreen implements Screen {
     private String playerName;
 
     private HighScores highScores;
-    private String highScoresPath = "highscores.json";
-    private Gson gson;
+    private final String highScoresPath = "highscores.json";
+    private final Gson gson;
 
     public GameScreen() {
         this.batch = new SpriteBatch();
@@ -99,7 +99,7 @@ public class GameScreen implements Screen {
         world.addSystem(new ObstacleGeneratorSystem(3, 12, 7, 4));
         world.addSystem(new PlayerControlledSystem());
         world.addSystem(new JumpOnRailSystem());
-        world.addSystem(new CollisionSystem(batch));
+        world.addSystem(new CollisionSystem());
         world.addSystem(new PlayerCollisionSystem(this));
         world.addSystem(new JumpSystem());
         world.addSystem(new RailSystem());

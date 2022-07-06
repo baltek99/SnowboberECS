@@ -16,13 +16,6 @@ import snowbober.Util.RotatedRectangle;
 import java.util.ArrayList;
 
 public class CollisionSystem implements System {
-
-    private final SpriteBatch batch;
-
-    public CollisionSystem(SpriteBatch batch) {
-        this.batch = batch;
-    }
-
     @Override
     public void update(long gameFrame, float delta, World world) {
         ArrayList<Component[]> components = world.getEntitiesWithComponents(new int[]{
@@ -55,7 +48,6 @@ public class CollisionSystem implements System {
     }
 
     private CollisionType intersects(Position posA, Collision colA, Visual visA, Position posB, Collision colB, Visual visB) {
-
         colA.rectangle.x = posA.x;
         colA.rectangle.y = posA.y;
 

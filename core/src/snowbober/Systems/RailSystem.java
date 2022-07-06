@@ -1,10 +1,13 @@
 package snowbober.Systems;
 
 import com.badlogic.gdx.graphics.Texture;
-import snowbober.Components.*;
+import snowbober.Components.CollisionResponse;
+import snowbober.Components.PlayerControlled;
+import snowbober.Components.Position;
+import snowbober.Components.Visual;
 import snowbober.ECS.Component;
-import snowbober.ECS.World;
 import snowbober.ECS.System;
+import snowbober.ECS.World;
 import snowbober.Enums.CmpId;
 import snowbober.Enums.PlayerState;
 import snowbober.Util.ConstValues;
@@ -38,7 +41,6 @@ public class RailSystem implements System {
                 Texture texture = new Texture("bober-stand.png");
                 components.get(3)[entity] = new Visual(texture, ConstValues.BOBER_DEFAULT_WIDTH, ConstValues.BOBER_DEFAULT_HEIGHT);
             }
-
         }
     }
 }

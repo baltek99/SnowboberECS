@@ -3,17 +3,16 @@ package snowbober.Systems;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import snowbober.Enums.CmpId;
 import snowbober.Components.Position;
 import snowbober.Components.Visual;
 import snowbober.ECS.Component;
 import snowbober.ECS.System;
 import snowbober.ECS.World;
+import snowbober.Enums.CmpId;
 
 import java.util.ArrayList;
 
 public class RenderSystem implements System {
-
     private final SpriteBatch batch;
 
     public RenderSystem(SpriteBatch batch) {
@@ -37,7 +36,7 @@ public class RenderSystem implements System {
 
             batch.begin();
             if (vis.texture != null && vis.isVisible) {
-                batch.draw(vis.texture, pos.x, pos.y, vis.imgWidth/2f, vis.imgHeight/2f,
+                batch.draw(vis.texture, pos.x, pos.y, vis.imgWidth / 2f, vis.imgHeight / 2f,
                         vis.imgWidth, vis.imgHeight, 1, 1, vis.rotation);
             }
             batch.end();

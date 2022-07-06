@@ -41,8 +41,6 @@ public class World {
         }
     }
 
-    // COMPONENT PART
-
     public void killAllEntities() {
         for (int j = 0; j < MAX_ENTITIES; j++) {
             for (int i = 0; i < MAX_COMPONENTS; i++) {
@@ -92,8 +90,8 @@ public class World {
     }
 
     public static boolean isEntityOk(int entityId, ArrayList<Component[]> entities) {
-        for (int cmp = 0; cmp < entities.size(); cmp++) {
-            if (entities.get(cmp)[entityId] == null) {
+        for (Component[] components : entities) {
+            if (components[entityId] == null) {
                 return false;
             }
         }

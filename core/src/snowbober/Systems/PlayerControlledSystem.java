@@ -3,7 +3,10 @@ package snowbober.Systems;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
-import snowbober.Components.*;
+import snowbober.Components.Jump;
+import snowbober.Components.PlayerControlled;
+import snowbober.Components.Position;
+import snowbober.Components.Visual;
 import snowbober.ECS.Component;
 import snowbober.ECS.System;
 import snowbober.ECS.World;
@@ -14,10 +17,8 @@ import snowbober.Util.ConstValues;
 import java.util.ArrayList;
 
 public class PlayerControlledSystem implements System {
-
     @Override
     public void update(long gameFrame, float delta, World world) {
-
         ArrayList<Component[]> components = world.getEntitiesWithComponents(new int[]{
                 CmpId.POSITION.ordinal(),
                 CmpId.PLAYER_CONTROLLED.ordinal(),

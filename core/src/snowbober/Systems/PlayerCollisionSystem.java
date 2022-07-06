@@ -14,8 +14,7 @@ import snowbober.Util.ConstValues;
 import java.util.ArrayList;
 
 public class PlayerCollisionSystem implements System {
-
-    private GameScreen gameScreen;
+    private final GameScreen gameScreen;
 
     public PlayerCollisionSystem(GameScreen gameScreen) {
         this.gameScreen = gameScreen;
